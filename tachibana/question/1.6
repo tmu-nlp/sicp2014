@@ -1,0 +1,1 @@
+new-ifは手続き型で定義されているので、sqrt-iterを評価する時は(good-enough? guess x)の結果に関わらず、guessと(sqrt-iter (improve guess x) x)を両方評価するため無限ループに入ってしまう。(一方特殊形式のifは条件部によって片方のみを評価するので無限にsqrt-iterを評価し続けることは無い)
