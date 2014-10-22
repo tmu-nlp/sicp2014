@@ -1,0 +1,12 @@
+ifの部分はbが0より大きければ(+ a b)となってa+b,小さければ(- a b)となってa-bを返すことを示している
+gosh>
+(define 
+     (a-plus-abs-b a b)
+     ((if (> b 0) + -) a b)
+)
+a-plus-abs-b
+gosh> (a-plus-abs-b 1 2)
+3
+gosh> (a-plus-abs-b 1 -1)
+2
+よって確認された

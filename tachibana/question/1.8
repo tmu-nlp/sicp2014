@@ -1,0 +1,29 @@
+	1.1.7で定義されていた部分を立方根に向けて変えてやれば良い
+(define (abs x)
+  (if (< x 0)
+      (- x)
+
+      x))
+
+
+(define (cube x) (* x x x))
+
+(define
+     (cube-improve guess x)
+     (/ (+ (* 2 guess) (/ x guess guess)) 3)
+)
+
+(define (cube-good-enough? guess x)
+  (< (abs (- (cube guess) x)) 0.001))
+
+(define (cub-iter guess x)
+  (if (cube-good-enough? guess x)
+      guess
+      (cub-iter (cube-improve guess x)
+                 x)))
+
+(define (cub x)
+  (cub-iter 1.0 x))
+
+gosh> (cub 27)
+3.0000005410641766
