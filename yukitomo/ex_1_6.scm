@@ -20,7 +20,7 @@
 (define (sqrt x)
     (sqrt-iter 1.0 x))
 
-(print (sqrt 36))
+(sqrt 36)
 ;(if <predicate> <consequent> <alternative>)
 ;「特殊形式ifの評価規則は、解釈系が正規順序と作用的順序のどちらを使うかに無関係に同じとする。述語式を最初に評価し、その結果が帰結式と代替式のいずれを評価するかを決める。」(p.12)
 ;if式を使わずにcondで実装したことにより、以上の性質が利用できない。問題文中で定義されているsqrt-iterでは、new-ifに作用させるために(sqrt-iter (improve guess x) x) が無限に呼ばれてしまう。
