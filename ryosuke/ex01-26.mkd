@@ -1,0 +1,6 @@
+in the follow function
+"""
+(* (expmod base (/ exp 2) m)
+   (expmod base (/ exp 2) m))
+"""
+expmod is called twice
