@@ -18,4 +18,4 @@
 (define (cbrt x)
 	(cbrt-iter 1.0 100.0 x)) 
 
-(print (cbrt 8))
+(cbrt 8)

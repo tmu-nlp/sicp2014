@@ -9,4 +9,4 @@
           ((and (< y x) (< y z)) (sum-of-squares x z)) ;yが最小
           (else (sum-of-squares x y)) ))
 
-(print(problem-1-3 1 2 3))
+(problem-1-3 1 2 3)
