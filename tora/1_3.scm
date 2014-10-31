@@ -1,0 +1,8 @@
+(define (square x) (* x x))
+(define (sum-of-two-larger-numbers a b c)
+    (cond ((and (> a c) (> b c)) (+ (square a) (square b)))
+          ((and (> a b) (> c b)) (+ (square a) (square c)))
+          ((and (> b a) (> c a)) (+ (square b) (square c)))
+     )
+  )
+(sum-of-two-larger-numbers 1 2 3)

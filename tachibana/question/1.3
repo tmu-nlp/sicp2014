@@ -1,0 +1,24 @@
+まず二つの数の二乗の和を返す手続きを定義する。
+(define 
+     (sum_of_squares x y)
+     (+ (* x x) (* y y))
+)
+
+1.3の条件部分
+(cond 
+     ((and (x >= z) (y >= z)) (sum_of_squares x y))
+     ((and (x >= y) (z >= y)) (sum_of_squares x z))
+     (else (sum_of_squares y z))
+)
+
+
+
+答え
+(define 
+     (sum_of_squares_in_three x y z) 
+     (cond 
+          ((and (>= x z) (>= y z)) (sum_of_squares x y))
+          ((and (>= x y) (>= z y)) (sum_of_squares x z))
+          (else (sum_of_squares y z))
+     )
+)
