@@ -15,5 +15,5 @@
 (define (square x)
   (* x x))
 
-(print (cube-root 27))
+(print (cube-root 8))
 
