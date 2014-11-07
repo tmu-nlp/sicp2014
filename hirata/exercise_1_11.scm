@@ -6,14 +6,15 @@
 	    n
 		(+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))))
 
-(print (f 3))
+(print (f 4))
 
 ;反復的プロセス
-(define (fib n)
-  (fib-iter 1 0 n))
-
-(define (fib-iter a b count)
-  (if (= count 0)
-      b
-      (fib-iter (+ a b) a (- count 1))))
-(print (fib 4))
+(define (f n)
+  (define (f-iter a b c count)
+    (if (= count 2)
+        a
+        (f-iter (+ a (* 2 b) (* 3 c)) a b (- count 1))))
+  (if (< n 3)
+	n
+    (f-iter 2 1 0 n)))
+(print (f 4))
