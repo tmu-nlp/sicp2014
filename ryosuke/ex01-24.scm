@@ -63,9 +63,10 @@
 
 (define (search-for-primes-iter a b)
   (if (< a b)
-    (and (if (fast-prime? a 1)
-           (timed-prime-test a))
-         (search-for-primes-iter (+ a 1) b))))
+    (begin
+      (if (fast-prime? a 1)
+        (timed-prime-test a))
+      (search-for-primes-iter (+ a 1) b))))
 
 
 (search-for-primes 1000 1020)
