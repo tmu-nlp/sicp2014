@@ -1,4 +1,4 @@
-#!/user/bin/gosh
+#!/usr/bin/gosh
 
 (define (cbrt-iter guess pre-guess x)
     (if (good-enough? guess pre-guess)
