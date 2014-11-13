@@ -62,6 +62,8 @@
 
 ;;;; Exercise 1.19 ;;;;
 
+;; フィボナッチ数計算の対数ステップ版を作成
+
 (define (Fib n)
     (Fib-iter 1 0 0 1 n))
 
@@ -83,20 +85,98 @@
 
 #|----
 
-a ← a + b, b ← a への変換 T を以下の行列式に置き換えて計算する.
+a = bq + aq + ap
+b = bp + aq
 
-|#
+a' = (bp + aq)q + (bq + aq + ap)q + (bq + aq + ap)p
+   = bpq + aq^2 + bq^2 + aq^2 + apq + bpq + apq + ap^2
+   = a(q^2 + q^2 + pq + pq + p^2) + b(pq + q^2 + pq)
+   = a(p^2 + 2q^2 + 2pq) + b(q^2 + 2pq)
+   = b(q^2 + 2pq) + a(q^2 + 2pq) + a(p^2 + q^2)
+
+b' = (bp + aq)p + (bq + aq + ap)q
+   = bp^2 + apq + bq^2 + aq^2 + apq
+   = apq + aq^2 + apq + bp^2 + bq^2 
+   = a(2pq + q^2) + b(p^2 + q^2)
+   = b(p^2 + q^2) + a(q^2 + 2pq)
+
+ここで、
+p' = p^2 + q^2
+q' = q^2 + 2pq
+
+とすると、
+a' = bq' + aq' + ap'
+b' = bp' + aq'
+
+となる
+
+----|#
 
 ;;;; Exercise 1.20 ;;;;
 
-(define (gcd a b)
-    (if (= b 0)
-        a
-        (gcd b (remainder a b))))
+;; ○正規順序評価
+;;   基本的演算子だけを持つ式が出てくるまでパラメタへの被演算子の式の置き換えを繰り返し、
+;;   基本的演算子が出現してから初めて評価を行う方式。
+;; ○作用的順序評価
+;;   引数を評価してから作用させる方式。
 
-(print (gcd 206 40))
+;; 作用的順序評価から
 
-;; gosh> 2
+(gcd 206 40)
 
+(if (= b 0)
+    a
+    (gcd b (remainder a b)))
 
+;; １回目
+(if (= 40 0)
+    206
+    (gcd 40 (remainder 206 40)))
+;; 条件式が#fなので、代替式が評価
+;; (gcd 40 6)
 
+;; ２回目
+(if (= 6 0)
+    40
+    (gcd 6 (remainder 40 6)))
+;; 条件式が#fなので、代替式が評価
+;; (gcd 6 4)
+
+;; ３回目
+(if (= 4 0)
+    6
+    (gcd 4 (remainder 6 4)))
+;; 条件式が#fなので、代替式が評価
+;; (gcd 4 2)
+
+;;４回目
+(if (= 2 0)
+    4
+    (gcd 2 (remainder 4 2)))
+;; 条件式が#fなので、代替式が評価
+;; (gcd 2 0)
+
+;; ５回目
+(if (= 0 0)
+    2
+    (gcd 0 (remainder 2 0)))
+;; 条件式が#tなので、帰結式が評価
+
+;; ans 2
+;; 合計４回
+
+;; 正規順序評価
+
+;; １回目
+(if (= 40 0)
+    206
+    (gcd 40 (remainder 206 40)))
+;; 述語式(= 40 0)が #f になるので、次に評価するのは代替式の
+(gcd 40 (remainder 206 40))
+
+;; 2回目
+(if (= (remainder 206 40) 0)
+    40
+    (gcd (remainder 206 40) (remainder 40 (remainder 206 40))))
+;; １回目と同じく述語式を評価するとまだ #f
+;; この後、しばらく繰り返し #f を返すことが想像できる
