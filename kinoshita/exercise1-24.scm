@@ -9,17 +9,32 @@
 (define (timed-prime-test n)
     (newline) (display n) (start-prime-test n (runtime)))
 (define (start-prime-test n start-time)
-    (if (prime? n)
+    (if (fast-prime? n 100)
         (report-prime (- (runtime) start-time))))
 (define (report-prime elapsed-time)
     (display "***") (display elapsed-time))
-(define (prime? n) (= n (smallest-divisor n)))
+(define (fast-prime? n times)
+    (cond ((= times 0) #t)
+          ((fermat-test n) (fast-prime? n (- times 1)))
+          (else false)))
+(define (fermat-test n)
+    (define (try-it a)
+        (= (expmod a n n) a))
+    (try-it (+ 1 (random (- n 1)))))
+(define (expmod base exp m)
+    (cond ((= exp 0) 1)
+          ((even? exp)
+            (remainder (square (expmod base (/ exp 2) m)) m))
+          (else (remainder (* base (expmod base (- exp 1) m)) m))))
 ;gaucheにはruntimeがないので実装
 (define (runtime)
     (use srfi-11)
         (let-values (((a b) (sys-gettimeofday)))
         (+ (* a 1000000) b)))
 
+;randomも同様
+(define (random x)
+    (modulo (sys-random) x))
 (define (even? n) (= 0 (remainder n 2)))
 
 (define (search-for-primes a b)
@@ -32,16 +47,14 @@
 (timed-prime-test 1009)
 (timed-prime-test 1013)
 (timed-prime-test 1019)
-;4micro sec
 (timed-prime-test 10007)
 (timed-prime-test 10009)
 (timed-prime-test 10037)
-;16micro sec
 (timed-prime-test 100003)
 (timed-prime-test 100019)
 (timed-prime-test 100043)
-;50micro sec
 (timed-prime-test 1000003)
 (timed-prime-test 1000033)
 (timed-prime-test 1000037)
-;130micro sec
+(timed-prime-test 100000000003)
+(timed-prime-test 10000000000037)
