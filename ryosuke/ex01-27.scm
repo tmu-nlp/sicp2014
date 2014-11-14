@@ -32,7 +32,11 @@
 (define (fermat-test n)
   (define (try-it a)
     (= (expmod a n n) a))
-  (try-it (+ 1 (random (- n 1)))))
+  (define (try-it-iter b)
+    (if (= b 1)
+      (try-it b)
+      (and (try-it b) (try-it-iter (- b 1)))))
+  (try-it-iter (- n 1)))
 
 (define (fast-prime? n times)
   (cond ((= times 0) #t)
@@ -58,19 +62,16 @@
 
 ;; my script
 
-(define (search-for-primes a b)
-  (search-for-primes-iter a b))
+; carmichael number
+; 561, 1105, 1729, 2465, 2821, 6601
 
-(define (search-for-primes-iter a b)
-  (if (< a b)
-    (begin
-      (if (fast-prime? a 1)
-        (timed-prime-test a))
-      (search-for-primes-iter (+ a 1) b))))
+(print 561)
+(print (fermat-test 561))
 
 
-(search-for-primes 1000 1020)
-(print "")
-(search-for-primes 1000000 1000050)
-(print "")
+(print 1105)
+(print (fermat-test 1105))
 
+
+(print 1729)
+(print (fermat-test 1729))

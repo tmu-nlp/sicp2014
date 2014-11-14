@@ -1,6 +1,8 @@
 i#!/usr/bin/gosh
 ;; -*- coding:utf-8 -*-
-;;実行方法　gosh ex01-22.scm
+;;実行方法　gosh ex01-28.scm
+
+(define (square x) (* x x))
 
 (define (mod a b) (remainder a b))
 

@@ -20,11 +20,13 @@
 (define (prime? n)
   (= n (smallest-divisor n)))
 
-(define (search-for-primes from to) 
-  (cond ((> from to) 0)
-        ((even? from) (search-for-primes (+ from 1) to))
-        (else ((timed-prime-test from)
-               (search-for-primes (+ from 2) to)))))
+(define (search-for-primes idx max)
+  (cond ((even? idx) (search-for-primes (+ idx 1) max))
+        ((> idx max) #f) 
+        (else
+          (begin
+            (timed-prime-test idx)
+            (search-for-primes (+ idx 2) max)))))
 
 (define (smallest-divisor n)
   (find-divisor n 2))
@@ -38,6 +40,12 @@
   (= (remainder b a) 0))
 
 
-(search-for-primes 1 1000000)
-
+(search-for-primes 1000 1020)
+(print "") 
+(search-for-primes 10000 10040)
+(print "") 
+(search-for-primes 1000000 1000050)
+(print "") 
+(search-for-primes 10000000 10000100)
+(print "")
 
