@@ -85,8 +85,22 @@
 
 #|----
 
+T:
+a ← a + b
+b ← a
+という変換
+
+T_pq:
+a ← bq + aq + ap
+b ← bp + aq
+という変換
+
+変換 T_pq を2回使うとその効果は同じ形式の変換 T_p'q' を1回使ったのと同じになることを示し、p', q' を、p, q を使って表せ
+
 a = bq + aq + ap
 b = bp + aq
+
+T_pq を１回作用させたものを a' b'とする
 
 a' = (bp + aq)q + (bq + aq + ap)q + (bq + aq + ap)p
    = bpq + aq^2 + bq^2 + aq^2 + apq + bpq + apq + ap^2
