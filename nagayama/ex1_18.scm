@@ -1,4 +1,4 @@
-; #lang scheme
+#lang scheme
 
 ; 和, 2倍, 半分, を用いて反復乗算手続き
 
