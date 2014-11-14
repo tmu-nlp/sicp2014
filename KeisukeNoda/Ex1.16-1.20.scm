@@ -192,5 +192,6 @@ b' = bp' + aq'
 (if (= (remainder 206 40) 0)
     40
     (gcd (remainder 206 40) (remainder 40 (remainder 206 40))))
+
 ;; １回目と同じく述語式を評価するとまだ #f
 ;; この後、しばらく繰り返し #f を返すことが想像できる
