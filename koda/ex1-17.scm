@@ -12,5 +12,3 @@
   (= (remainder n 2) 0))
    
 (print (fast-multiple 2 10))
-
-
