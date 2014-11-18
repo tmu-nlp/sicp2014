@@ -16,8 +16,6 @@
 (define (prime? n)
   (= n (smallest-divisor n)))
 
-;---------------------------------------------------
-
 (define (timed-prime-test n)
   (newline)
   (display n)
@@ -31,29 +29,28 @@
   (display " *** ")
   (display elapsed-time))
 
-;(timed-prime-test 4)
+(define (search-for-primes start end)
+  (if (<= start end)
+      (if (even? start)
+          (search-for-primes (+ start 1) end) ;when even
+          (begin ;when odd
+            (timed-prime-test start)
+            (search-for-primes (+ start 2) end)))))
 
 
-;(odd? 32)
-(define (output-search-primes n start-time)
-  (newline)
-  (display n)
-  (report-prime (- (runtime) start-time)))
-  
+;O(root(n))
+;O(root(1000)) 
+(search-for-primes 1000 1020)
+(newline)
+(display "-------------------")
+;O(root(10000)) = 12 * root(10)=37.9
+(search-for-primes 10000 10050)
+(newline)
+(display "-------------------")
+;O(root(100000))= 39 * root(10) = 123
+(search-for-primes 100000 100050)
+(search-for-primes 1000000 1000100)
 
-(define (start-serch-for-primes n start-time)
-  (if (prime? n)
-      (output-search-primes n start-time)))
 
-(define (timed-serch-for-primes begin end start-time)
-  (if (<= begin end)
-      (if (even? begin)
-          (timed-serch-for-primes (+ begin 1) end start-time)
-                    (start-serch-for-primes begin start-time))))
-      
-(define (search-for-primes begin end)
-  (timed-serch-for-primes begin end (runtime)))
 
-(search-for-primes 334 2000)
-;(search-for-primes 10000 100000)
  
