@@ -416,39 +416,63 @@ gosh>
 ;;;; Exercise 1.28 ;;;;
 
 ;; nを法とした1の自明でない平方根を見つけたらシグナルを出すようにexpmod手続きを修正
-(define (miller-rabin-expmod base exp m)
+
+;; random関数
+(use srfi-27)
+(define s (make-random-source))
+(random-source-pseudo-randomize! s 314159 265358)
+(define random (random-source-make-integers s))
+
+;; ここから
+(define (mr-test n times)
+  (cond ((= n 0) (display 'done))
+        ((fermat-test n) (mr-test n (- times 1)))
+        (else false)))
+        
+(define (fermat-test n)
+    (define (try-it a)
+    (= (expmod a (- n 1) n) 1))
+  (try-it (+ 1 (random (- n 1)))))
+
+(define (expmod base exp m)
   (cond ((= exp 0) 1)
         ((even? exp)
-         (let* ((x (miller-rabin-expmod base (/ exp 2) m))
-                (result (remainder (square x) m)))
-           (if (non-trivial-sqrt? x m result)
-               0
-               result)))
+         (if (= (remainder (square base) m) 1)
+             0
+             (remainder (square (expmod base (/ exp 2) m))
+                    m)))
         (else
-         (remainder (* base (miller-rabin-expmod base (- exp 1) m))
-                    m))))        
- 
-(define (non-trivial-sqrt? a n a-squared-mod-n)
-  (and (not (or (= a 1)
-                (= a (- n 1))))
-       (= a-squared-mod-n 1)))
- 
-(define (miller-rabin-test? n)
-  (define (try-it a)
-    (= (miller-rabin-expmod a (- n 1) n) 1))
-  (try-it (+ 1 (big-random (- n 1)))))
- 
-(define (miller-rabin-prime? n)
-  (define witnesses 20)
-  (define (fast-miller-rabin-prime? n times)
-    (cond ((= times 0) true)
-          ((miller-rabin-test? n) (fast-miller-rabin-prime? n (- times 1)))
-          (else false)))
-  (fast-miller-rabin-prime? n witnesses))
+         (remainder (* base (expmod base (- exp 1) m))
+                    m))))  
 
-(miller-rabin-prime? 561)
-(miller-rabin-prime? 1105)
-(miller-rabin-prime? 1729)
-(miller-rabin-prime? 2465)
-(miller-rabin-prime? 2821)
-(miller-rabin-prime? 6601)
+(fermat-test 561)
+(fermat-test 1105)
+(fermat-test 1729)
+(fermat-test 2465)
+(fermat-test 2821)
+(fermat-test 6601)
+
+;; 1回目
+;; gosh> #t
+;; gosh> #t
+;; gosh> #f
+;; gosh> #t
+;; gosh> #t
+;; gosh> #t
+
+;; 2回目
+;; gosh> #t
+;; gosh> #f
+;; gosh> #t
+;; gosh> #t
+;; gosh> #t
+;; gosh> #t
+
+;; 3回目
+;; gosh> #f
+;; gosh> #f
+;; gosh> #t
+;; gosh> #t
+;; gosh> #t
+;; gosh> #t　　　　;; 常に真とは限りません、なぜ？
+
