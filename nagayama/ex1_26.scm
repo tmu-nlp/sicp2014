@@ -1,4 +1,4 @@
-#lang scheme
+; #lang scheme
 
 ; speci -- base^exp (mod m)
 (define (expmod base exp m)

@@ -1,8 +1,11 @@
 ; #lang scheme
-;
+
+; sin(x) を再帰手続きで求める際のオーダー.
+
+; 前提関数 
 (define (cube x) (* x x x))
 (define (p x) (- (* 3 x) (* 4 (cube x))))
-(define (abs x) (if (< x 0) (- x) x))
+
 
 ; p の適用回数の counter を追加したsine
 (define (sine angle)

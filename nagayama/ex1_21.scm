@@ -1,4 +1,4 @@
-#lang scheme
+; #lang scheme
 
 ; 前提関数
 (define (square x) (* x x))

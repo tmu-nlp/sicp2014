@@ -1,4 +1,4 @@
-#lang scheme
+; #lang scheme
 
 ; 前提関数
 (define (square x) (* x x))
@@ -57,5 +57,4 @@
 ; (search-for-prime  100000000000 100) ;   1..03,   1..19,   1..57 ;   ms
 ; (search-for-prime 1000000000000 100) ;   1..39,   1..61,   1..63 ;  ms
 ;
-; 11桁ではオーバーフローしてしまった。
-; 
+ 
