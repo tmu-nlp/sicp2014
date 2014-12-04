@@ -1,6 +1,6 @@
 #!/usr/bin/gosh
 ;; -*- coding:utf-8 -*-
-;;実行方法　gosh ex01-45.scm
+;;実行方法　gosh ex01-46.scm
 
 (define tolerance 0.00001)
 
