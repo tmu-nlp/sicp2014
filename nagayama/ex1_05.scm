@@ -1,3 +1,9 @@
+; #lang scheme
+
+; 適用順によるエラーの発生について.
+; if 文 の適用順の特殊性.
+
+
 (define (p) (p))
 (define (test x y)
         (if (= x 0) 0 y))
