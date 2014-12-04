@@ -1,5 +1,6 @@
-; computing integral by Simpson's Rule
+; gosh ex01-29.scm
 
+; computing integral by Simpson's Rule
 (define (simpsons f a b n)
   (define (even? x)
     (= 0 (remainder x 2)))
@@ -16,5 +17,19 @@
           ((even? i) (iter (+ 1 i) (+ temp (* 2 (yk i a h)))))
           (else (iter (+ 1 i) (+ temp (* 4 (yk i a h)))))))
   
-  (iter 0 0))
-          
+  (* (/ h 3) (iter 0 0)))
+
+; test
+
+(define (cube x)
+  (* x x x))
+
+(print "integral between a and b")
+(print "(simpsons f a b n)")
+
+(print "(simpsons cube 0 1 100)")
+(print (simpsons cube 0 1 100))
+
+(print "(simpsons cube 0 1 1000)")
+(print (simpsons cube 0 1 1000))
+
