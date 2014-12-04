@@ -1,0 +1,21 @@
+
+git branch [name]		ローカルのブランチを作成
+git checkout [name]		ブランチの切り替え　切り替える時は今いるブランチのコミットを終えている必要あり?
+git add
+git commit
+作業する
+
+git push -u origin [name]	プッシュして追跡にする
+git push 					マスター関係なし　ブランチ間の話
+作業完了
+
+git checkout master
+git pull
+git merge [name]
+git push
+ブランチを消す
+
+git branch -d [name]	ローカルなブランチが削除
+git push origin :[name]	リモートのブランチが削除
+
+
