@@ -8,7 +8,6 @@
 
 ; 前提関数
 (define (average x y) (/ (+ x y) 2))
-(define (close-enough? x y) (< (abs (- x y)) 0.001))
 
 (define tolerance 0.00001)
 (define (fixed-point f first-guess)
@@ -28,7 +27,7 @@
 ;; 前提関数 ここまで
 
 
-; cont-frac (recursive)
+; cont-frac (iterative)
 (define (cont-frac n d k)
   (define (iter i result)
     (if (< 0 i)
@@ -36,7 +35,7 @@
         result))
   (iter k 0))
 
-; cont-frac (liner)
+; cont-frac (recursive)
 (define (cont-frac-li n d k)
   (define (iter i)
     (if (> k i)

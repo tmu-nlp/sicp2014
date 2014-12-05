@@ -14,6 +14,7 @@
           (else (* b (fast-expt b (- n 1))))))
 
 
+;1.16
 ;n = 0 の時,  a * b^0 = 1
 ;n が偶数の時,  a * (b^2)^{n/2} = a * b^n
 ;n が奇数の時,  ab * b^{n-1} = a * b^n
@@ -26,7 +27,7 @@
   (fast-expt2 1 b n))
 
 
-#?=(fast-expt 4 2)
+#?=(fast-expt 2 8)
 ;(fast-expt 2 8)
 ;(fast-expt2 1 2 8)
 ;(fast-expt2 1 (square 2) (/ 8 2))
