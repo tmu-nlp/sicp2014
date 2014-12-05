@@ -2,6 +2,7 @@
   (= (remainder n 2) 0))
 (define (square x)
   (* x x))
+
 (define (fib n)
   (fib-iter 1 0 0 1 n))
 (define (fib-iter a b p q count)
@@ -13,7 +14,7 @@
 		   (+ (square q) (* 2 p q));compute q'
 		   (/ count 2)))
 	(else (fib-iter (+ (* b q) (* a q) (* a p))
-			(+ (* b q) (* a q))
+			(+ (* b p) (* a q))
 			p
 			q
 			(- count 1)))))
@@ -23,6 +24,7 @@
 	 ;(print x)
 	 (print (fib x))
 	 (re-print (+ x 1)))))
+
 (re-print 1)
 
 

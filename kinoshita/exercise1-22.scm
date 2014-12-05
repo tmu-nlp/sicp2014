@@ -5,7 +5,7 @@
         (report-prime (- (runtime) start-time))))
 (define (report-prime elapsed-time)
     (display "***") (display elapsed-time))
-(define (prime? n) (smallest-divisor n))
+(define (prime? n) (= n (smallest-divisor n)))
 
 (define (smallest-divisor n) (find-divisor n 2))
 (define (find-divisor n test-divisor)
@@ -20,14 +20,26 @@
     (let-values (((a b) (sys-gettimeofday)))
                 (+ (* a 1000000) b)))
 
-(define (even? n) (remainder n 2))
+(define (even? n) (= (remainder n 2) 0))
 
 (define (search-for-primes a b)
-    (cond ((< b a) #f))
+    (cond ((< b a) #f)
           ((even? a) (search-for-primes (+ a 1) b))
           (else
             (begin (timed-prime-test a)
-            (search-for-primes (+ a 2) b))))
-(search-for-primes 1000 1050)
-(search-for-primes 10000 10050)
-(search-for-primes 100000 100050)
+                (search-for-primes (+ a 2) b)))))
+
+(timed-prime-test 1000)
+(search-for-primes 1000 1020)
+;1009,1013,1019
+;6micro sec
+(search-for-primes 10000 10038)
+;10007,10009,10037
+;20micro sec
+(search-for-primes 100000 100044)
+;100003,100019,100043
+;60micro sec
+(search-for-primes 1000000 1000038)
+;1000003,1000033,1000037
+;140micro sec
+;おおよそsqrt(10)倍ずつになっている

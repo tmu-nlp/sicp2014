@@ -1,15 +1,7 @@
 normal-order:
 (gcd 206 40)
-(gcd 40 (remainder 206 40))
-(gcd (remainder 206 40) (remainder 40 (remainder 206 40)))
-(gcd 6 (remainder 40 6))
-(gcd (remainder 40 6) (remainder 6 (remainder 40 6)))
-(gcd 4 (remainder 6 4))
-(gcd (remainder 6 4) (remainder 4 (remainder 6 4)))
-(gcd 2 (remainder 4 2))
-(gcd 2 0)
-2
-reminder:7回
+if文で14回 + 最後の評価に4回
+reminder:18回
 
 applicative-order:
 (gcd 206 40)

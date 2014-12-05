@@ -1,3 +1,4 @@
+#lang racket
 (define (gcd a b)
   (if (= b 0)
       a
@@ -7,9 +8,13 @@
 
 ;正規順序なら
 ;  (gcd 206 40)
-;->(gcd 40 (remainder 206 40))
+;->(gcd (remainder 206 40))
 ;->(gcd (remainder 206 40) (remainder 40 remainder(206 40)) )
-;->...無限ループになる？
+;->...無限ループになる？×
+;if文の条件判断は解釈順序を問わず必ず評価するから
+;(if (= 40 0))
+;   206
+;   (gcd (...))
 ;
 ;作用的順序なら
 ;  (gcd 206 40)

@@ -22,6 +22,6 @@
 (define (h n)
   (A 2 n))
 ; h = 2^2^2...^2 (following n times)
-
+; h = 2↑↑n
 
 

@@ -1,5 +1,7 @@
 ; #lang scheme
 
+; 金額に対して、釣り銭の出ない硬貨の支払い方が何通りあるか.
+
 ; count-change
 (define (count-change amount)
   (cc amount 5))

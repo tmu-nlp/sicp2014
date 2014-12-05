@@ -1,3 +1,5 @@
+; #lang scheme
+
 ; パスカルの三角形
 
 ; Combination
@@ -32,13 +34,6 @@
                          (display (combination y x))
                          (iter stage (+ x 1) y)))))
   (iter stage 0 0))
-
-; pascal_tri 処理フロー    
-; 段数を超えているか？
-; 　処理終了
-; 　右にはみ出しているか？
-; 　　改行、次の段へ
-; 　　要素を出力して右へ
 
 
 ; 関数の実行

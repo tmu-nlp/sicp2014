@@ -36,17 +36,19 @@
 
 ;; my script
 
-(define (search-for-primes idx max)
-  (cond ((even? idx) (search-for-primes (+ idx 1) max))
-        ((> idx max) #f)
+(define (search-for-primes i max)
+  (cond ((even? i) (search-for-primes (+ i 1) max))
+        ((> i max) #f)
         (else
           (begin
-            (timed-prime-test idx)
-            (search-for-primes (+ idx 2) max))))) 
+            (timed-prime-test i)
+            (search-for-primes (+ i 2) max))))) 
 
 (search-for-primes 1000 1020)
 (print "")
 (search-for-primes 10000 10040)
+(print "")
+(search-for-primes 100000 100040)
 (print "")
 (search-for-primes 1000000 1000050)
 (print "")
