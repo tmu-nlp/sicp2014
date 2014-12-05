@@ -8,15 +8,15 @@
 (define (identity x) x)
 
 
-;; accumulate(liner)
-(define (accumulate-li combiner null-value term a next b)
+;; accumulate(recursive)
+(define (accumulate-re combiner null-value term a next b)
   (if (> a b)
       null-value
       (combiner (term a)
-         (accumulate-li combiner null-value term (next a) next b))))
+         (accumulate-re combiner null-value term (next a) next b))))
 
-;; accumulata(recursive)
-(define (accumulate-re combiner null-value term a next b)
+;; accumulata(iterative)
+(define (accumulate-it combiner null-value term a next b)
   (define (iter combiner a result)
     (if (> a b)
         result
@@ -26,10 +26,10 @@
 
 ; 以下、実行テスト
 
-;; 奇数和 (liner)
+;; 奇数和 (iterative
 (define (odd-square x)
   (define (odd x) (- (* 2 x) 1))
-  (accumulate-li + 0 odd 1 inc x))
+  (accumulate-it + 0 odd 1 inc x))
 
 ;; 階乗 (recursive)
 (define (factorial x)
