@@ -48,7 +48,7 @@
   (start-prime-test n (current-time)))
 
 (define (start-prime-test n start-time)
-  (if (fast-prime? n 1)
+  (if (fast-prime? n 100)
     (report-prime (time-difference (current-time) start-time))))
 
 (define (report-prime elapsed-time)
@@ -64,13 +64,18 @@
 (define (search-for-primes-iter a b)
   (if (< a b)
     (begin
-      (if (fast-prime? a 1)
+      (if (fast-prime? a 100)
         (timed-prime-test a))
       (search-for-primes-iter (+ a 1) b))))
 
-
 (search-for-primes 1000 1020)
 (print "")
-(search-for-primes 1000000 1000050)
+(search-for-primes 10000 10040)
+(print "")
+(search-for-primes 100000 100040)
+(print "")
+(search-for-primes 100000000000 100000000005)
 (print "")
 
+(search-for-primes 10000000000000 10000000000050)
+(print "")

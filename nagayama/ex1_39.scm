@@ -4,9 +4,6 @@
 ; 求める手続き (tan-cf x k) を定義する.
 
 
-; 前提関数
-(define (close-enough? x y) (< (abs (- x y)) 0.001))
-
 
 ; cont-frac
 (define (cont-frac n d k)
