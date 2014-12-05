@@ -54,10 +54,4 @@
 		(timed-prime-test a))
 	  (search-for-primes (+ a 1) b))))
 
-(print (fermat-test 13))
-(print (fermat-test 561))
-(print (fermat-test 1105))
-(print (fermat-test 1729))
-(print (fermat-test 2465))
-(print (fermat-test 2821))
-(print (fermat-test 6601))
+;未完
