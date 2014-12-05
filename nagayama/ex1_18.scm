@@ -1,6 +1,6 @@
 ; #lang scheme
 
-; 和, 2倍, 半分, を用いて反復乗算手続き
+; ex1.17 で設計した乗算手続きを反復プロセスで書き直す.
 
 ; double, halve
 (define (double x) (* x 2))

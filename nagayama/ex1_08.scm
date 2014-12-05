@@ -1,3 +1,5 @@
+#lang scheme
+
 ;cube-rute
 ;ex1_7.scm をもとに、ニュートン法の式と要所の数値を修正
  
@@ -6,7 +8,7 @@
   (define (iter guess x)
      (if (good-enough? guess x)
          guess
-         (iter (inprove guess x) x)))
+         (iter (improve guess x) x)))
   (iter 1.0 x))
 
 ; 推定値の算出

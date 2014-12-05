@@ -3,11 +3,13 @@
 (define (square x) (* x x))
 
 ;product
+;recursive
 (define (product term a next b)
 	(if (> a b)
 		1
 		(* (term a) (product term (next a) next b))))
 
+;iterative
 (define (iter-product term a next b)
   (define (iter a result)
     (if (> a b)
@@ -23,12 +25,20 @@
 (factorial 3)
 (factorial 4)
 
-;pi/4
-(define (pi/4 n)
+;pi (recursive)
+(define (pi n)
   (define (term n)
     (if (even? n)
-        (/ (+ n 2) (+ n 1))
-        (/ (+ n 1) (+ n 2))))
-  (* 1 (product term 1 inc n)))
+        (/ (+ n 2) (+ n 1)) ;even
+        (/ (+ n 1) (+ n 2)))) ;odd 
+  (* 4.0 (product term 1 inc n)))
+(pi 1000)
 
-(pi/4 100)
+;pi (iterative)
+(define (iter-pi n)
+  (define (term n)
+    (if (even? n)
+        (/ (+ n 2) (+ n 1)) ;even
+        (/ (+ n 1) (+ n 2)))) ;odd 
+  (* 4.0 (iter-product term 1 inc n)))
+(iter-pi 1000)

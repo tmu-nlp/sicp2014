@@ -1,6 +1,7 @@
-#lang scheme
+; #lang scheme
 
-; 和, 2倍, 半分, を用いて乗算手続き
+; * (乗算演算子) を知らないものとして,
+; 和, 2倍, 半分, を用いて乗算手続きの記述.
 
 ; double, halve
 (define (double x) (* x 2))

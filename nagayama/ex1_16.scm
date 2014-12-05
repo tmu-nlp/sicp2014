@@ -1,6 +1,8 @@
 ; #lang scheme
 
-;
+; 高速な乗算手続き.
+
+; 前提関数
 (define (square x) (* x x))
 (define (even? n) (= (remainder n 2) 0))
 

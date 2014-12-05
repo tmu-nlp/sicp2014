@@ -1,3 +1,8 @@
+; #lang scheme
+
+; if文の処理順の特殊性.
+
+
 (define (new-if predicate then-clause else-clause)
         (cond (predecate then-clause)
               (else else-clause)))
