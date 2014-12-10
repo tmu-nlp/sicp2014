@@ -1,5 +1,5 @@
 #!/usr/bin/gosh
-;カンニング
+;?
 
 (define (Fib n)
     (Fib-iter 1 0 0 1 n))
@@ -8,6 +8,16 @@
     (cond
         ((= count 0) b)
         ((even? count)
-          (Fib-iter a b (+ (* p p) (* q q)) (+ (* 2 p q) (* q q)) (/ count 2)))
+          (Fib-iter a 
+          	        b 
+          	        (+ (* p p) (* q q)) 
+          	        (+ (* 2 p q) (* q q)) 
+          	        (/ count 2)))
         (else
-          (Fib-iter (+ (* b q) (* a q) (* a p)) (+ (* b p) (* a q)) p q (- count 1)))))
+          (Fib-iter (+ (* b q) (* a q) (* a p)) 
+          	        (+ (* b p) (* a q)) 
+          	        p 
+          	        q 
+          	        (- count 1)))))
+
+(print (Fib 8))

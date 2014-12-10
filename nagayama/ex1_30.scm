@@ -7,7 +7,7 @@
 (define (even? n) (= (remainder (round n) 2) 0))
 (define (inc x) (+ x 1))
 
-; 総和の一般形 (recursive)
+; 総和の一般形 (ittrative)
 (define (sum term a next b)
   (define (iter a result)
     (if (> a b)
