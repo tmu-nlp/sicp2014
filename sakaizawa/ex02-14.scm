@@ -1,6 +1,6 @@
 #!/usr/bin/gosh
 ;; -*- coding:utf-8 -*-
-;;実行方法　gosh ex02-10.scm
+;;実行方法　gosh ex02-14.scm
 
 (define (center i)
   (/ (+ (lower-bound i) (upper-bound i)) 2)) 
