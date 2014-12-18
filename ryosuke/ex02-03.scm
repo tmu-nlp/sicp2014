@@ -7,11 +7,16 @@
 (define (make-rectangle p1 p2)
   (cons p1 p2))
 
+(define (get-p1 x)
+  (car x))
+(define (get-p2 x)
+  (cdr x))
+
 (define (height-rectangle x)
-  (- (y-point (cdr x)) (y-point (car x))))
+  (- (y-point (get-p2 x)) (y-point (get-p1 x))))
 
 (define (width-rectangle x)
-  (- (x-point (cdr x)) (x-point (car x))))
+  (- (x-point (get-p2 x)) (x-point (get-p1 x))))
 
 (define (area-rectangle x)
   (* (height-rectangle x) (width-rectangle x)))
