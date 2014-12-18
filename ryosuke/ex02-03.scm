@@ -8,10 +8,10 @@
   (cons p1 p2))
 
 (define (height-rectangle x)
-  (- (cdr (cdr x)) (cdr (car x))))
+  (- (y-point (cdr x)) (y-point (car x))))
 
 (define (width-rectangle x)
-  (- (car (cdr x)) (car (car x))))
+  (- (x-point (cdr x)) (x-point (car x))))
 
 (define (area-rectangle x)
   (* (height-rectangle x) (width-rectangle x)))
