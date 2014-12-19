@@ -19,8 +19,8 @@
 ; factorial
 (define (factorial n)
   (define (inc i) (+ i 1))
-  (define (buff n) n)
-  (i-product buff 1 inc n))
+  (define (identity n) n)
+  (i-product identity 1 inc n))
 
 ; pi/4
 (define (quarter-pi n)

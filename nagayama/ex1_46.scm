@@ -1,4 +1,4 @@
-#lang scheme
+; #lang scheme
 
 ; 前提関数
 (define (average x y) (/ (+ x y) 2))
