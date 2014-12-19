@@ -1,5 +1,6 @@
 ;;;; Exercise 2.10 ;;;;
 
+
 ;; 0をまたがる区間で割った時、どうなるか分からないことを調べる
 (define R1 (make-interval 5 10))
 (define R2 (make-interval 1 5))
