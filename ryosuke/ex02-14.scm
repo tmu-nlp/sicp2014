@@ -62,8 +62,8 @@
                   (add-interval (div-interval one r1)
                                 (div-interval one r2)))))
 
-(define small (make-center-percent (center (make-interval 10.2 10.3)) (percent (make-interval 10.2 10.3))))
-(define large (make-center-percent (center (make-interval 15 18)) (percent (make-interval 15 18))))
+(define small (make-center-width 5 0.1))
+(define large (make-center-width 8 0.1))
 (print (par1 small large))
 (print (par2 small large))
 
