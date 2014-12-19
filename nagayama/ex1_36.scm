@@ -6,7 +6,6 @@
 
 ; 前提関数
 (define (average x y) (/ (+ x y) 2))
-(define (close-enough? x y) (< (abs (- x y)) 0.001))
 
 
 ; fixed-point

@@ -19,10 +19,10 @@
   (= n (smallest-divisor n)))
 
 
-#?=(smallest-divisor 199)    ;; => 199
-#?=(smallest-divisor 1999)   ;; => 1999
-#?=(smallest-divisor 19999)  ;; => 7
-#?=(prime? 19999)
+;#?=(smallest-divisor 199)    ;; => 199
+;#?=(smallest-divisor 1999)   ;; => 1999
+;#?=(smallest-divisor 19999)  ;; => 7
+;#?=(prime? 19999)
 
 ;(smallest-divisor 13)
 ;(find-divisor 13 2)

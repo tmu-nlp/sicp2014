@@ -22,6 +22,7 @@
   (cond ((= times 0) true)
 		((fermat-test n) (fast-prime? n (- times 1)))
 		(else false)))
+
 (define (next x)
   (cond ((= x 2) 3)
 		(else (+ x 2))))
@@ -29,6 +30,7 @@
     (- (time->seconds (current-time)) 1136041200))
 (define (square x)
   (* x x))
+
 (define (smallest-divisor n) (find-divisor n 2))
 (define (find-divisor n test-divisor)
   (cond ((> (square test-divisor) n) n)
@@ -52,4 +54,10 @@
 		(timed-prime-test a))
 	  (search-for-primes (+ a 1) b))))
 
-(print (search-for-primes 1000 1020))
+(print (fermat-test 13))
+(print (fermat-test 561))
+(print (fermat-test 1105))
+(print (fermat-test 1729))
+(print (fermat-test 2465))
+(print (fermat-test 2821))
+(print (fermat-test 6601))

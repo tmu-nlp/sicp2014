@@ -40,9 +40,9 @@
 
 (define (pi-wallis times)
   (define (term n)
-    (/ (* (* 2.0 n) (* 2.0 (+ n 1.0)))
-       (square (+ (* 2.0 n) 1.0))))
-  (* 4 (product term 1 inc times)))
+    (square (/ ((* 2.0 (+ n 1.0)))
+        (+ (* 2.0 n) 1.0)))))
+  (* 2 (product term 1 inc times)))
 
 (print "(pi-wallis 1000)")
 (print (pi-wallis 1000))

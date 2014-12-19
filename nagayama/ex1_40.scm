@@ -7,7 +7,6 @@
 (define (average x y) (/ (+ x y) 2))
 (define (square x) (* x x))
 (define (cube x) (* x x x))
-(define (close-enough? x y) (< (abs (- x y)) 0.001))
 
 
 ; fixed-point

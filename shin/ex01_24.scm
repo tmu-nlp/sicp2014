@@ -26,7 +26,7 @@
         (else false)))
 
 (define (start-prime-test n start-time)
-  (and (fast-prime? n 10)
+  (and (fast-prime? n 100)
        (report-prime (time-difference (current-time) start-time))))
 
 (search (expt 10 3))

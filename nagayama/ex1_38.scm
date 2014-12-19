@@ -3,10 +3,6 @@
 ; 連分数 から e (Napier's) の近似値を求める.
 
 
-; 前提関数
-(define (close-enough? x y) (< (abs (- x y)) 0.001))
-
-
 ; D(i)
 (define (D i)
   (cond ((= (modulo i 3) 0) 1)
