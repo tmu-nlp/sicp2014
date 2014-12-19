@@ -1,6 +1,6 @@
 #!/usr/bin/gosh
 ;; -*- coding:utf-8 -*-
-;;実行方法　gosh ex02-10.scm
+;;実行方法　gosh ex02-12.scm
 
 (define (center i)
   (/ (+ (lower-bound i) (upper-bound i)) 2))
@@ -17,11 +17,12 @@
 (define (lower-bound x) (car x))
 (define (upper-bound x) (cdr x))
 
-(print "(percent (make-center-percent 100 15))")
-(print (percent (make-center-percent 100 15)))
-(print "(percent (make-center-percent 100 7))")
-(print (percent (make-center-percent 100 7)))
-(print "(percent (make-center-percent 35 7))")
-(print (percent (make-center-percent 35 7)))
+(define R1 (make-center-percent 100 15))
+(print "(define R1 (ake-center-percent 100 15))")
+(print R1)
+(print "(percent R1)")
+(print (percent R1))
+(print "(center R1)")
+(print (center R1))
 
 
