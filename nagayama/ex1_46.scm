@@ -1,5 +1,9 @@
 ; #lang scheme
 
+; 反復改善法の一般化
+; 一般化された反復改善法を用いて 2乗根 を表現
+
+
 ; 前提関数
 (define (average x y) (/ (+ x y) 2))
 (require srfi/27)

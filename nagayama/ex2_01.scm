@@ -1,8 +1,6 @@
-#lang racket
+; #lang scheme
 
-; 負数も扱える make-rat
-
-(load "Ratio.scm")
+; 負数も扱える make-rat を定義する
 
 (define (make-rat n d)
   (if (= d 0) #f
@@ -11,3 +9,6 @@
           (cons (/ n g) (/ d g))
           (cons (* -1 (/ n g))
                 (* -1 (/ d g)))))))
+
+; ran
+(make-rat 2 -8)
