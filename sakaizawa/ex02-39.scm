@@ -1,6 +1,6 @@
 #!/usr/bin/gosh
 ;; -*- coding:utf-8 -*-
-;;実行方法　gosh ex02-38.scm
+;;実行方法　gosh ex02-39.scm
 
 (define (fold-right op initial sequence)
   (if (null? sequence)
