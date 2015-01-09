@@ -81,7 +81,7 @@
 ; ここまでの結果を踏まえて n乗根を求める手続きを定義する.
 
 
-(define (root x n)
+(define (new-n-root x n)
   (fixed-point
    ((repeated average-damp (floor (/ (log x) (log 2))))
     (lambda (y)
