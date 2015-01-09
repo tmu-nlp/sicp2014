@@ -9,4 +9,4 @@
 (define two (lambda (f) (lambda (x) (f (f x)))))
 
 (define (+ a b)
-    (lambda (x) (a (b x))))
+    (lambda (f) (lambda (x) ((a f) ((b f) x)))))

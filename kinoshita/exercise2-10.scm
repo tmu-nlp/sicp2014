@@ -11,7 +11,7 @@
                    (max p1 p2 p3 p4))))
 
 (define (div-interval x y)
-    (if (= (- (upper-bound y) (lower-bound y)) 0)
+    (if (or (<= (upper-bound y) 0) (= (lower-bound y) 0))
         -1
         (mul-interval
             x

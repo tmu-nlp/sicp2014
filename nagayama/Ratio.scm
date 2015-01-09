@@ -1,4 +1,4 @@
-#lang scheme
+; #lang racket
 
 ; 分数に関する手続き
 
