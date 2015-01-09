@@ -84,15 +84,16 @@
 	(display (* (+ per-x per-y) 100. ))
 	(display "%")
 	(newline))) 
-
-;x=(center x)
-;dx=(width x)
-;y=(center y)
-;dy=(width y)
-;(x+dx)(y+dy)=xy+xdy+ydx+dxdy
-;xdy=xy per-y
-;ydx=xy per-x
-;(x+dx)(y+dy)=xy(1+per-x per-y)
+#|
+x=(center x)
+dx=(width x)
+y=(center y)
+dy=(width y)
+(x+dx)(y+dy)=xy+xdy+ydx+dxdy
+xdy=xy per-y
+ydx=xy per-x
+(x+dx)(y+dy)=xy(1+per-x per-y)
+|#
 
 (define pair1-pp (make-interval 10. 5))
 (define pair2-pp (make-interval 6. 7))

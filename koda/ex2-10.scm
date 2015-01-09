@@ -31,16 +31,16 @@
 (define (div-interval x y)
   (mul-interval
 	x
-	(make-interval (/ 1.0 (upper-bound y))
-				   (/ 1.0 (lower-bound y)))))
+	(cond ((or (<= (upper-bound y) 0)
+			   (= (lower-bound y) 0))
+		   (print "error"))
+		  (else (make-interval (/ 1.0 (upper-bound y))
+				   (/ 1.0 (lower-bound y)))))))
 
 
-(define pair1 (make-interval 3 3)) 
-(define pair2 (make-interval 3 3)) 
+(define pair1 (make-interval -3 3)) 
+(define pair2 (make-interval 1 3)) 
 (print pair1)
 (print pair2)
-(print (add-interval pair1 pair2)) 
-(print (sub-interval pair1 pair2)) 
-(print (mul-interval pair1 pair2)) 
 (print (div-interval pair1 pair2)) 
 
