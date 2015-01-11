@@ -29,7 +29,7 @@
 
 ;(print (center (make-center-percent 40 20)))
 ;(print (percent (make-center-percent 40 20)))
-;(print (make-center-percent 40 20)) ; 40 * 0.2 = 8 $B$J$N$G(B (32, 48)
+;(print (make-center-percent 40 20)) ; 40 * 0.2 = 8 なので (32, 48)
 
 
 
@@ -54,7 +54,7 @@
 
 
 
-; par1 $B$H(B par2
+; par1 と par2
 
 (define (par1 r1 r2)
   (div-interval (mul-interval r1 r2)
@@ -71,22 +71,22 @@
 
 
 
-; $B6h4V(B A $B$H(B B $B$rDj5A$9$k(B
+; 区間 A と B を定義する
 
 (define A (make-center-percent 5 1))
 (define B (make-center-percent 9 2))
 
 
 
-; $B%F%9%H(B
-; A $B$H(B B $B$N(B par1 $B$H(B par2 $B$r7W;;(B
+; テスト
+; A と B の par1 と par2 を計算
 
 (print (center (par1 A B)))
 (print (center (par2 A B)))
 (print (percent (par1 A B)))
 (print (percent (par2 A B)))
 
-; A/A $B$H(B A/B $B$r7W;;(B
+; A/A と A/B を計算
 
 (print (center (div-interval A A)))
 (print (center (div-interval A B)))

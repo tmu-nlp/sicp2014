@@ -24,7 +24,7 @@
 (define (square x) (* x x))
 
 
-; $B%F%9%H(B
+; テスト
 (print (sqrt 9))
 
 
@@ -41,5 +41,5 @@
   ((iterative-improve test improve) first-guess))
 
 
-; $B%F%9%H(B
+; テスト
 (print (fixed-point cos 1.0))

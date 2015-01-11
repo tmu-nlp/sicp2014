@@ -5,22 +5,22 @@
   (z (lambda (p q) p)))
 
 
-; (car (cons x y)) $B$NI>2A$NN.$l(B
+; (car (cons x y)) の評価の流れ
 
 ; (car (cons x y))
 ; ((cons x y) (lambda (p q) p))
-; ((lambda (m) (m x y)) (lambda (p q) p))   $B"+(B (lamdba (p q) p) $B$r(B m $B$KF~$l$k(B
-; ((lambda (p q) p) x y)   $B"+(B x $B$H(B y $B$r(B (p q) $B$KF~$l$k(B
+; ((lambda (m) (m x y)) (lambda (p q) p))   ← (lamdba (p q) p) を m に入れる
+; ((lambda (p q) p) x y)   ← x と y を (p q) に入れる
 ; x
 
 
-; cdr $B$NDj5A(B
+; cdr の定義
 
 (define (cdr z)
   (z (lambda (p q) q)))
 
 
-; $B%F%9%H(B
+; テスト
 
 (define x (cons 1 2))
 (define y (cons 3 4))

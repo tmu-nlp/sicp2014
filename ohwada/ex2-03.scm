@@ -1,4 +1,4 @@
-; make-segment $B$H(B make-point
+; make-segment と make-point
 
 (define (make-segment a b)
   (cons a b))
@@ -14,20 +14,20 @@
 (define (y-point x) (cdr x))
 
 
-; make-rectangle ( $B9=@.;R(B ) : $B@~J,(B( $B;OE@(B (x1, y1), $B=*E@(B (x2, y2) )
-;                             $B$H9b$5$,M?$($i$l$k$H$9$k(B
+; make-rectangle ( 構成子 ) : 線分( 始点 (x1, y1), 終点 (x2, y2) )
+;                             と高さが与えられるとする
 
 (define (make-rectangle segment height)
   (cons segment height))
 
-; segment $B$H(B height ( $BA*Br;R(B ) $B"*(B $B@~J,$H9b$5$rJV$9(B
+; segment と height ( 選択子 ) → 線分と高さを返す
 
 (define (segment rectangle) (car rectangle))
   
 (define (height rectangle) (cdr rectangle))
 
 
-; cul-perimeter $B$H(B cul-area
+; cul-perimeter と cul-area
 
 (define (square x) (* x x))
 
@@ -65,6 +65,6 @@
          (make-rectangle (make-segment (make-point 1 0) (make-point 5 0))
                          6)))
 
-; (1, 0) $B$H(B (5, 0) $B$N5wN%(B $B"*(B 4
-; perimeter $B"*(B 4 * 2 + 6 * 2 = 20
-; area $B"*(B 4 * 6 = 24
+; (1, 0) と (5, 0) の距離 → 4
+; perimeter → 4 * 2 + 6 * 2 = 20
+; area → 4 * 6 = 24

@@ -1,4 +1,4 @@
-; 2 $BDL$j$N(B square-list
+; 2 通りの square-list
 
 (define (square-list items)
   (if (null? items)

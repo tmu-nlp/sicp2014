@@ -29,4 +29,4 @@
 
 (print (center (make-center-persent 40 20)))
 (print (percent (make-center-persent 40 20)))
-(print (make-center-persent 40 20)) ; 40 * 0.2 = 8 $B$J$N$G(B (32, 48)
+(print (make-center-persent 40 20)) ; 40 * 0.2 = 8 なので (32, 48)
