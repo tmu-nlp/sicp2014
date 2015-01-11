@@ -43,6 +43,8 @@
 	(cons (/ n g) (/ d g))))
 
 (print-rat (add-rat one-third one-third))
+(print-rat (make-rat 3 -5))
+(print-rat (make-rat -3 -5))
 
 (define (make-rat n d)
   (let ((g (gcd n d)))

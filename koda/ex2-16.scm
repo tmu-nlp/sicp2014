@@ -102,9 +102,8 @@
 (percent a) 
 (percent b) 
 
-(percent r1) 
-(percent r2) 
-
 (percent (par1 r1 r2)) 
 (percent (par2 r1 r2)) 
+
+;par2のほうが不確かな変数，つまりr1,r2の使用回数が少ないため精確でより良い式といえる
 

@@ -2,15 +2,16 @@
 
 (define (square x)
   (* x x))
+(define (inc x)
+  (+ x 1))
 
 (define zero (lambda (f) (lambda (x) x)))
+(define one (lambda (f) (lambda (x) (f x))))
+(define two (lambda (f) (lambda (x) (f (f x)))))
 (define (add-1 n)
   (lambda (f) (lambda (x) (f ((n f) x)))))
 
-(define pair (cons 2 3)) 
-(print (car pair)) 
-(print (cdr pair)) 
-
-(print zero)
-(print add-1)
+(print ((zero inc) 0))
+(print ((one inc) 0))
+(print ((two inc) 0))
 ;進捗ダメです
