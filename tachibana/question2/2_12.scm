@@ -13,9 +13,13 @@
   (make-interval (- c (* (/ c 100.0) p))
                  (+ c (* (/ c 100.0) p))))
 
+;区間のパーセント相対許容誤差とは中央値に対して、幅がどのくらいの割合か示す割合であるため、
 (define (percent i)
   (* (/ (width i) (center i)) 100.0))
 
 
-(print "(percent (make-center-percent 100 15))")
-(print (percent (make-center-percent 100 15)))
+(print "(make-center-percent 50 15)")
+(print (make-center-percent 50 15))
+
+(print "(percent (cons 42.5 57.5))")
+(print (percent (cons 42.5 57.5)))
