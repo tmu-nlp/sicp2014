@@ -1,0 +1,22 @@
+#lang racket
+(define (square x) (* x x))
+(define (cont-frac N D k)
+    (define (cf i)
+        (if (= k i)
+            (/ (N k) (D k))
+            (/ (N i)
+               (+ (D i) (cf (+ i 1))))))
+  (cf 1))
+
+(define (tan-cf x k)
+  (define (N i)
+        (if (= i 1)
+            x
+            (- (square x))))
+  (define (D i)
+        (- (* i 2) 1))
+  (cont-frac N D k))
+(newline)
+(display (tan-cf 10.0 100))
+(newline)
+(display (tan 10))
