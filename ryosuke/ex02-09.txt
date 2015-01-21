@@ -1,0 +1,40 @@
+xの区間の幅
+u_x - l_x / 2
+dx
+
+yの区間の幅
+u_y - l_y / 2
+dy
+
+加算
+x+y の区間の幅
+(l_x + l_y), (u_x + u_y)の区間の幅
+(u_x + u_y) - (l_x + l_y) / 2
+(u_x - lx) + (u_y - l_y) / 2
+dx+dy
+
+減算
+x-y
+(l_x + l_y), (u_x + u_y)
+(l_x + l_y) - (u_x + u_y) / 2
+-(u_x - l_x) -(u_y - l_y) / 2
+-dx-dy
+
+乗算
+p1 = l_x * l_y
+p2 = l_x * u_y
+p3 = u_x * l_y
+p4 = u_x * u_y
+if min = p1 and max = p4
+(p1, p4)
+(l_x * l_y) - (u_x * u_y) / 2
+dx, dyで表せない
+
+除算
+乗算を使ってるので同じケースを考えると
+x * (1/u_y, 1/l_y)
+(u_x * 1/l_y) - (l_x * 1/u_y) / 2
+dx, dyで表せない 
+
+
+

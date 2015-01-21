@@ -43,3 +43,5 @@
   (try first-guess))
 
 (print (fixed-point (lambda (x) (/ (log 1000) (log x))) 1.1))
+(newline)
+(print (fixed-point (lambda (x) (average x (/ (log 1000) (log x)))) 1.1))

@@ -39,4 +39,4 @@
 		(try next))))
   (try first-guess))
 
-(print (fixed-point (lambda (x) (+ 1 (/ 1 x)))1.0))
+(print (fixed-point (lambda (x) (+ 1 (/ 1 x))) 1.0))

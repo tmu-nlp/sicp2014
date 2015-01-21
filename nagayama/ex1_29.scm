@@ -24,8 +24,7 @@
   (define (simp-term k)
     (* (simp-coef k)
        (f (+ a (* k h)))))
-  (* (/ h 3)
-     (sum simp-term 0 inc n)))
+  (* (/ h 3) (sum simp-term 0 inc n)))
 
 
 

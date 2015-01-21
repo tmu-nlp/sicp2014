@@ -47,4 +47,5 @@
 (print (newton-method (cubic -1 1 1) 1))
 (print (newton-method (cubic 1 -1 1) 1))
 (print (newton-method (cubic 1 1 -1) 1))
+(print (newton-method (cubic 0 1 0) 1))
 
