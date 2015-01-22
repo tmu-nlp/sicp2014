@@ -18,10 +18,10 @@
 (define cont-frac cont-frac-rec)
 ;(define cont-frac cont-frac-iter)
 
-#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 9)
-#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 10)
-#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 11)
-#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 12)
-#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 13)
-#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 14)
+;#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 9)
+;#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 10)
+;#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 11)
+;#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 12)
+;#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 13)
+;#?=(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 14)
 ;4桁の精度を得るためには、k を11以上にすればよい
