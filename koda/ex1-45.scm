@@ -61,5 +61,5 @@
 (print (repeat-root 2 16 1) ) 
 (print (repeat-root 3 27 1) ) 
 (print (repeat-root 4 16 2) ) 
-(print (repeat-root 256 10 5) ) 
+(print (repeat-root 5 128 3) ) 
 

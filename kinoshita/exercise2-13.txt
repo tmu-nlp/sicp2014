@@ -1,0 +1,4 @@
+E(A) = (upper(A) - lower(A)) / (upper(A) + lower(A))
+E(A) * E(B) = 0
+
+E(A*B) = E(A) + E(B)

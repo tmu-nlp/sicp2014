@@ -2,17 +2,11 @@
 
 ; (f f) について 説明する.
 
-; 前提関数
-(define (square x) (* x x))
-
 ; main
 (define (f g) (g 2))
 
 ; run
-(f square)
-; -> 4
-(f (lambda (z) (* z (+ z 1))))
-; -> 6
+(f f)
 
 ; (f f) を評価したら
 ;
@@ -22,5 +16,6 @@
 ; -> "2" という手続きは用意されていないため error
 
 ; 
+
 
 

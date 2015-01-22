@@ -190,14 +190,16 @@
 
 ;;;; Exercise 1.46 ;;;;
 
-(define (iterative-improve good-enough? improve)
+;; iterative-improve は、「引数として予測値をとり、予測値が十分良好になるまで改良を繰り返す手続き」を値として返す手続き ;;
+(define (iterative-improve good-enough? improve) ;; <<- 予測値が十分良好であるかを調べる手続き
   (define (check guess)
     (let ((next-guess (improve guess)))
       (if (good-enough? guess next-guess)
           next-guess
           (check next-guess))))
-  (lambda (initial-guess)
+  (lambda (initial-guess)                         ;; <<- 予測値を入れて、改良を繰り返す手続き
     (check initial-guess)))
+
 
 (define (average x y)
   (/ (+ x y) 2))
@@ -205,12 +207,15 @@
 (define (square x) (* x x))
  
 ;; sqrtの手続き
+;; good-enough? >> 予測値が十分であるかを調べる手続き
+;; improve      >> 予測値を改良する 
+
 (define (sqrt x)
-  (define (good-enough? guess next-guess)
+  (define (good-enough? guess next-guess)        ;; 精度チェック
     (< (abs (- (square next-guess) x)) 0.001))
-  (define (improve guess)
+  (define (improve guess)                        ;; 改良手続き
     (average guess (/ x guess)))
-  ((iterative-improve good-enough? improve) x))
+  ((iterative-improve good-enough? improve) x))  ;; 反復改良法を用いる.
 
 (sqrt 9.0)
 ;; gosh> 3.00009155413138
@@ -218,14 +223,17 @@
 
 
 ;; fixed-pointの手続き
+;; close-enough? >> 予測値が十分であるかを調べる手続き
+;; improve       >> 予測値を改良する 
+
 (define tolerance 0.00001)
  
 (define (fixed-point f first-guess)
-  (define (close-enough? guess next-guess)
+  (define (close-enough? guess next-guess)                  ;; 精度チェック
     (< (abs (- guess next-guess)) tolerance))
-  (define (improve guess)
+  (define (improve guess)                                   ;; 改良手続き
     (f guess))
-  ((iterative-improve close-enough? improve) first-guess))
+  ((iterative-improve close-enough? improve) first-guess))  ;; 引数として予測値をとり、予測値が改良されるまで繰り返す.
 
 (define (average-damp f)
   (lambda (x) (average x (f x))))

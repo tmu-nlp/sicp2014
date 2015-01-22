@@ -1,0 +1,17 @@
+(use srfi-27)
+
+(define (cons x y)
+  (* (expt 2 x) (expt 3 y)))
+(define (car z)
+  (div-count z 2)) 
+(define (cdr z)
+  (div-count z 3)) 
+(define (div-count x a)
+  (define (div-count-iter x a n)
+	(if (= (remainder x a) 0) (div-count-iter (/ x a) a (+ n 1))
+	  n))
+  (div-count-iter x a 0))
+
+(define pair (cons 2 3)) 
+(print (car pair)) 
+(print (cdr pair)) 

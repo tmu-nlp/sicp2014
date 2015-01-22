@@ -23,7 +23,7 @@
           ((even? x) 2)
           (else 4)))
   (define (term k) (* (coef k) (f (+ a (* k h)))))
-  (* (/ h 3) (sum term 0 next n)))
+  (* (/ h 3.0) (sum term 0 next n)))
 
 (print "(simpson-integral cube 0 1 100)")
 (print (simpson-integral cube 0 1 100))

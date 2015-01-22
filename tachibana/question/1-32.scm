@@ -23,11 +23,3 @@
 
 (print "(product identify 1 inc 5)")
 (print (product identify 1 inc 5))
-
-;;再帰的手続き
-(define (accumulate-rec combiner null-value term a next b)
-  (if (> a b)
-      null-value
-      (combiner (term a)
-         (accumulate-rec combiner null-value
-                         term (next a) next b))))

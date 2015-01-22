@@ -59,6 +59,7 @@
 (define (smooth f)
   (lambda (x) (/ (+ (f (- x dx)) (f x) (f (+ x dx))) 3)))
 
-(print ((repeated (smooth square) 1) 2))
-(print ((repeated (smooth square) 5) 2))
+(print ((repeated (smooth square) 2) 5))
+(print ((repeated (smooth sqrt) 1) 2))
+(print ((repeated (smooth sqrt) 100) 2))
 

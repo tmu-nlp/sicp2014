@@ -26,7 +26,6 @@
 	(* (term a)
 	   (product-integral term (next a) next b))))
 
-
 (define (func x)
   (/ (double (+ x 1)) (double x)))
 (define (inc2 n) (+ n 2))

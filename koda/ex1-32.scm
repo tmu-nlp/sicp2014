@@ -6,13 +6,7 @@
   (* x x x))
 
 (define (inc n) (+ n 1))
-(define (product-cubes a b)
-  (product cube a inc b))
 (define (identity x) x)
-(define (product-integers a b)
-  (product identity a inc b))
-(define (sum-integers a b)
-  (sum identity a inc b))
 
 ;再帰
 (define (accumulate combiner null-value term a next b)
