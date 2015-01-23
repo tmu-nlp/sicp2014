@@ -37,5 +37,5 @@
   (/ (- (upper-bound a) (lower-bound a)) 2.0))
 
 (define small (make-interval 2 4))
-(define big (make-interval -1 -12))
+(define big (make-interval -1 0))
 (display (div-interval small big))

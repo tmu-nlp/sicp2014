@@ -19,4 +19,4 @@
 (define (n-fold-smooth f n)
   ((repeated smooth n) f))
 
-#?=((n-fold-smooth square 2) 5)
+;#?=((n-fold-smooth square 2) 5)
