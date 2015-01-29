@@ -20,7 +20,7 @@
 (define (new-div-interval x y)
   (let ((yl (lower-bound y))
         (yu (upper-bound y)))
-    (if (and (< yl 0) (< 0 yu))
+    (if (or (<= yu 0) (= 0 yl))
         (error "error" yl yu)
         (mul-interval x
                           (make-interval (/ 1.0 yu) (/ 1.0 yl))))))

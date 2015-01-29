@@ -68,7 +68,7 @@
 		  (else (reverse-iter (cdr items) (cons (deep-reverse (car items)) result)))))
   (reverse-iter items ()))
 
-(define x (list (list 1 2) (list 3 4)))
+(define x (list (list 1 2) (list 3 4 (list 5 6))))
 (print x)
 (print (reverse x))
 (print (deep-reverse x))
