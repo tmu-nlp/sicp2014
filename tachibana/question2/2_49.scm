@@ -131,7 +131,7 @@
           (make-segment (make-vect 0.35 0.50) (make-vect 0.25 0.00))
           (make-segment (make-vect 0.50 0.30) (make-vect 0.40 0.00)))))
 
-(wave (list (cons 100 100) (cons 0 100) (cons 100 0)))
+(wave (list (cons 100 100) (cons 100 0) (cons 0 100)))
 
 
 
