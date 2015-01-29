@@ -1,8 +1,9 @@
 #lang scheme
 
 ; 並列接続の計算
+; par1,par2 で計算結果が異なることを確認する
 ; 適当な区間 A,B を用意して
-; A/A, A/B の値が par1,par2 でどのようになるか調べる
+; A/A, A/B の値がどのようになるか調べる
 
 (define (par1 r1 r2)
   (div-interval (mul-interval r1 r2)
@@ -54,8 +55,21 @@
                       (/ 1.0 (lower-bound y))))))
 
 ; run
-(define a (make-center-percent 2000 1))
+(define a (make-center-percent 2000 10))
 (define b (make-center-percent 1000 5))
+
+(define par1ab (par1 a b))
+(define par2ab (par2 a b))
+(display "par1ab : ") par1ab
+(display "par2ab : ") par2ab
+
+(define par1aa (par1 a a))
+(define par2aa (par2 a a))
+(display "par1aa : ") par1aa
+(display "par2aa : ") par2aa
+
+(newline)
+
 (define aa (div-interval a a))
 (display "aa : ") aa
 (define ab (div-interval a b))
@@ -67,15 +81,6 @@
 (display "percent_aa : ") (percent aa)
 (display "percent_ab : ") (percent ab)
 
-(define par1ab (par1 a b))
-(define par2ab (par2 a b))
-(display "par1ab : ") par1ab
-(display "par2ab : ") par2ab
-
-(define par1aa (par1 a a))
-(define par2aa (par2 a a))
-(display "par1aa : ") par1aa
-(display "par2aa : ") par2aa
 
 
 

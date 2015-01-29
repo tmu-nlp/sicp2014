@@ -17,23 +17,22 @@
         ((or (< amount 0) (no-more? coin-values)) 0)
         (else
          (+ (cc amount
-                (except-first-denomination
-                 coin-values))
+                (except-first-denomination coin-values))
             (cc (- amount
-                   (first-denomination
-                    coin-values))
+                   (first-denomination coin-values))
                 coin-values)))))
 
 ; run
 (cc 100 us-coins)
 
 ; コインの種類の並び順は結果に影響を与えない
+; 
 ; この数え上げアルゴリズムは
 ; 
 ;      [金額]を[n]種類のコインで支払うパターン
 ;  =   [金額]を[n-1]種類のコインで支払うパターン
 ;    + [より少ない金額]を[n]種類のコインで支払うパターン
 ; 
-; という考えが元である. 
+; という考えが元になった全探査アルゴリズムである. 
 ; コインの額面が正でさえあれば何枚目のコインがいくらかは関係ない.
 ; 
