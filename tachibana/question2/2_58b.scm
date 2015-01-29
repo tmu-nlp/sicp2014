@@ -8,18 +8,14 @@
 (define (make-product m1 m2) (list '* m1 m2))
 
 (define (sum? x)
-  (and (pair? x) (eq? (car x) '+)))
+  (and (pair? x) (eq? (cadr x) '+)))
 
-(define (addend s) (cadr s))
-
-(define (augend s) (caddr s))
+(define (addend s) (car s))
 
 (define (product? x)
-  (and (pair? x) (eq? (car x) '*)))
+  (and (pair? x) (eq? (cadr x) '*)))
 
-(define (multiplier p) (cadr p))
-
-(define (multiplicand p) (caddr p))
+(define (multiplier p) (car p))
 
 
 (define (make-sum a1 a2)
@@ -69,11 +65,11 @@
 
 
 (define (exponentiation? x)
-  (and (pair? x) (eq? (car x) '**)))
+  (and (pair? x) (eq? (cadr x) '**)))
 
-(define (base s) (cadr s))
+(define (base s) (car s))
 
-(define (exponent s) (caddr s))
+(define (exponent s) (cddr s))
 
 (define (make-exponentiation m1 m2)
   (cond ((=number? m2 0) 1)
@@ -81,12 +77,24 @@
         ((and (number? m1) (number? m2)) (expt m1 m2))
         (else (list '** m1 m2))))
 
+(define (augend s)
+  (if (null? (cdddr s))
+      (caddr s)
+      (cddr s)))
 
+(define (multiplicand p)
+  (if (null? (cdddr p))
+      (caddr p)
+      (cddr p)))
 
-(print (deriv (make-exponentiation (list '+ 'x 1) 5) 'x))
-(print (deriv (make-exponentiation (list '+ (list '* 2 'x) 1) 'a) 'x))
+;ans
+;2_58aからcaddrをcddrにして(augend s)と(multiplicand p)の(cons '+ (cddr s))の部分を(cddr s)のようにする
 
+(print (deriv '(x + 3) 'x))
 
+(print (deriv '(x + 3 * (x + y + 2)) 'x))
+
+(print (deriv '(3 * (x + y + 2)) 'x))
 
 
 
