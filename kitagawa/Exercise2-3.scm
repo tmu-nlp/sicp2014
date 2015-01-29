@@ -17,7 +17,8 @@
            (square (- (y-point (start-segment a))
                       (y-point (end-segment a)))))))
 
-(define rec1 (make-rectangle 3 4))
+(define rec1 (make-rectangle  (cons(cons 0 0)(cons 0 3)) (cons (cons 0 0) (cons 0 4))))
+
 (print "(define rec1 (make-rectangle 3 4))")
 
 ;another expression height*width 
