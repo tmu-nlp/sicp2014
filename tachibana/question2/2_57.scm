@@ -81,10 +81,19 @@
         ((and (number? m1) (number? m2)) (expt m1 m2))
         (else (list '** m1 m2))))
 
+;ans
+(define (augend s)
+  (if (null? (cdddr s))
+      (caddr s)
+      (cons '+ (cddr s))))
+
+(define (multiplicand p)
+  (if (null? (cdddr p))
+      (caddr p)
+      (cons '* (cddr p))))
 
 
-(print (deriv (make-exponentiation (list '+ 'x 1) 5) 'x))
-(print (deriv (make-exponentiation (list '+ (list '* 2 'x) 1) 'a) 'x))
+(print (deriv '(* x y (+ x 3)) 'x))
 
 
 

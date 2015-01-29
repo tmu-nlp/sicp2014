@@ -8,18 +8,14 @@
 (define (make-product m1 m2) (list '* m1 m2))
 
 (define (sum? x)
-  (and (pair? x) (eq? (car x) '+)))
+  (and (pair? x) (eq? (cadr x) '+)))
 
-(define (addend s) (cadr s))
-
-(define (augend s) (caddr s))
+(define (addend s) (car s))
 
 (define (product? x)
-  (and (pair? x) (eq? (car x) '*)))
+  (and (pair? x) (eq? (cadr x) '*)))
 
-(define (multiplier p) (cadr p))
-
-(define (multiplicand p) (caddr p))
+(define (multiplier p) (car p))
 
 
 (define (make-sum a1 a2)
@@ -69,9 +65,9 @@
 
 
 (define (exponentiation? x)
-  (and (pair? x) (eq? (car x) '**)))
+  (and (pair? x) (eq? (cadr x) '**)))
 
-(define (base s) (cadr s))
+(define (base s) (car s))
 
 (define (exponent s) (caddr s))
 
@@ -81,12 +77,22 @@
         ((and (number? m1) (number? m2)) (expt m1 m2))
         (else (list '** m1 m2))))
 
+(define (augend s)
+  (if (null? (cdddr s))
+      (caddr s)
+      (cons '+ (cddr s))))
 
+(define (multiplicand p)
+  (if (null? (cdddr p))
+      (caddr p)
+      (cons '* (cddr p))))
 
-(print (deriv (make-exponentiation (list '+ 'x 1) 5) 'x))
-(print (deriv (make-exponentiation (list '+ (list '* 2 'x) 1) 'a) 'x))
+;ans
+;全ての定義文においてcarとcadrを入れ替えれば良い。
 
+(print (deriv '(x + (3 * (x + (y + 2)))) 'x))
 
+(print (deriv '(x * (3 * 5)) 'x))
 
 
 

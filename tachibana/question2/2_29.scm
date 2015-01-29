@@ -32,14 +32,11 @@
   	  		(and (balanced? (branch-structure (right-branch mobile))) (balanced? (branch-structure (left-branch mobile)))))
   	  	((list? (branch-structure (right-branch mobile))) (balanced? (branch-structure (right-branch mobile))))
   	  	((list? (branch-structure (left-branch mobile))) (balanced? (branch-structure (left-branch mobile))))
-  	  	(else #t)
-  	  )
-  #f)
-#f)
-)
+  	  	(else #t))
+      #f)
+    #f))
 
 (define (torque branch) (* (branch-length branch) (total-weight (branch-structure branch))))
 
 ;d
 ;cadrをcdrにすればよい
-
