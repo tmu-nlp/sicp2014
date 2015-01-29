@@ -69,7 +69,7 @@
 
 (define (base s) (car s))
 
-(define (exponent s) (cddr s))
+(define (exponent s) (caddr s))
 
 (define (make-exponentiation m1 m2)
   (cond ((=number? m2 0) 1)
@@ -88,15 +88,13 @@
       (cddr p)))
 
 ;ans
-;2_58aからcaddrをcddrにして(augend s)と(multiplicand p)の(cons '+ (cddr s))の部分を(cddr s)のようにする
+;2_58aから(augend s)と(multiplicand p)の(cons '+ (cddr s))の部分を(cddr s)のようにする
 
 (print (deriv '(x + 3) 'x))
 
 (print (deriv '(x + 3 * (x + y + 2)) 'x))
 
 (print (deriv '(3 * (x + y + 2)) 'x))
-
-
 
 
 

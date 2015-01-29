@@ -12,14 +12,10 @@
 
 (define (addend s) (car s))
 
-(define (augend s) (caddr s))
-
 (define (product? x)
   (and (pair? x) (eq? (cadr x) '*)))
 
 (define (multiplier p) (car p))
-
-(define (multiplicand p) (caddr p))
 
 
 (define (make-sum a1 a2)
