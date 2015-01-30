@@ -79,7 +79,7 @@
                (make-segment v0 v3)
                (make-segment v3 v2)))))
 
-(draw-frame-outline (list (cons 100 100) (cons 0 100) (cons 100 0)))
+(draw-frame-outline (make-frame (make-vect 100 100) (make-vect 100 0) (make-vect 0 100)))
 
 ;b
 (define draw-frame-X
@@ -94,7 +94,7 @@
                (make-segment v0 v3)
                (make-segment v0 v4)))))
 
-(draw-frame-X (list (cons 100 100) (cons 0 100) (cons 100 0)))
+(draw-frame-X (make-frame (make-vect 100 100) (make-vect 100 0) (make-vect 0 100)))
 
 ;c
 (define draw-diamond
@@ -108,7 +108,7 @@
                (make-segment v2 v3)
                (make-segment v3 v0)))))
 
-(draw-diamond (list (cons 100 100) (cons 0 100) (cons 100 0)))
+(draw-diamond (make-frame (make-vect 100 100) (make-vect 100 0) (make-vect 0 100)))
 
 ;d これは他の人のを見ました
 (define wave
@@ -131,7 +131,7 @@
           (make-segment (make-vect 0.35 0.50) (make-vect 0.25 0.00))
           (make-segment (make-vect 0.50 0.30) (make-vect 0.40 0.00)))))
 
-(wave (list (cons 100 100) (cons 100 0) (cons 0 100)))
+(wave (make-frame (make-vect 100 100) (make-vect 100 0) (make-vect 0 100)))
 
 
 
