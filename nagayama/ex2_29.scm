@@ -11,20 +11,20 @@
 (define (make-branch length structure)
   (list length structure))
 
-; [a]
+; [a] left-branch, right-branch を定義
 (define (left-branch mobile) (car mobile))
 (define (right-branch mobile) (car (cdr mobile)))
 (define (branch-length branch) (car branch))
 (define (branch-structure branch) (car (cdr branch)))
 
-; [b] total-weight
+; [b] total-weight を定義
 (define (total-weight mobile)
   (if (list? mobile)
       (+ (total-weight (branch-structure (left-branch mobile)))
          (total-weight (branch-structure (right-branch mobile))))
       mobile))
 
-; [c] balanced?
+; [c] balanced? を定義
 (define (balanced? mobile)
   (if (list? mobile)
     (if (= (torque (left-branch mobile))

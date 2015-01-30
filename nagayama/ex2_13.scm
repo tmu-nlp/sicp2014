@@ -19,6 +19,7 @@ B = [b * (1 - w2), b * (1 + w2)]
 uAB = ab + abw1 + abw2 + w1w2
                          \--/
                       とても小さい
+
 uAB ~ ab + abw1 + abw2 + 0
     = ab + (w1 + w2)ab
 
