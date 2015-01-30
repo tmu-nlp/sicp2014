@@ -12,8 +12,7 @@
               (list (deep-reverse (car items))))
       items))
 
-(define x (list (list 1 2) (list 3 4)))
+(define x (list (list 1 2) (list 3 4 (list 5 6))))
 #?=x
 #?=(reverse x)
 #?=(deep-reverse x)
-#?=(deep-reverse (list (list 66 1 2) (list 55 3 4)))
