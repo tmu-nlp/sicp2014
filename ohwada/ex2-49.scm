@@ -1,4 +1,4 @@
-; $B%U%l!<%`$N(B constructor $B$H(B selector
+; フレームの constructor と selector
 (define (make-frame origin edge1 edge2)
   (list origin edge1 edge2))
 
@@ -16,7 +16,7 @@
 
 
 
-; $B%Y%/%H%k$N(B constructor $B$H(B selector
+; ベクトルの constructor と selector
 (define (make-vect x y) (cons x y))
 (define (xcor-vect vect) (car vect))
 (define (ycor-vect vect) (cdr vect))
@@ -48,7 +48,7 @@
 
 
 
-; segment $B$N(B constructor $B$H(B selector
+; segment の constructor と selector
 (define (make-segment vect1 vect2) (cons vect1 vect2))
 
 (define (start-segment segment) (car segment))
@@ -56,7 +56,7 @@
 
 
 
-; draw-line (2$BE@4V$K@~$r0z$/(B)
+; draw-line (2点間に線を引く)
 (define (draw-line v1 v2)
   (display (xcor-vect v1))
   (display ",")
@@ -83,11 +83,11 @@
 
 
 
-; $B%U%l!<%`(BX $B$rDj5A(B
+; フレームX を定義
 (define X (make-frame (make-vect 200 200) (make-vect 100 0) (make-vect 0 100)))
 
 
-; a. $B;XDj$5$l$?%U%l!<%`$N307A$rIA$/%Z%$%s%?(B
+; a. 指定されたフレームの外形を描くペインタ
 (define outline-frame
   (segments->painter
    (list
@@ -101,7 +101,7 @@
 
 
 
-; b. $B%U%l!<%`$N8~$+$$9g$&D:E@F1;N$r7k$s$G(B"X"$B$rIA$/%Z%$%s%?(B
+; b. フレームの向かい合う頂点同士を結んで"X"を描くペインタ
 (define draw-x
   (segments->painter
     (list
@@ -112,7 +112,7 @@
 (print (draw-x X))
 
 
-; c. $B%U%l!<%`$N3FJU$NCfE@$r7k$s$GI)7A$rIA$/%Z%$%s%?(B
+; c. フレームの各辺の中点を結んで菱形を描くペインタ
 (define draw-rhombus
   (segments->painter
     (let ((mid1 (scale-vect 0.5
@@ -133,7 +133,7 @@
 (print (draw-rhombus X))
 
 
-; d. wave $B%Z%$%s%?(B
+; d. wave ペインタ
 (define wave
   (segments->painter
    (list (make-segment (make-vect 0.2 0.0) (make-vect 0.4 0.4))

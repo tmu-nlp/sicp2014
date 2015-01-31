@@ -16,13 +16,13 @@
          (error "unknown expression type -- DERIV" exp))))
 
 
-; x $B$OJQ?t$+!)(B
+; x は変数か？
 (define (variable? x) (symbol? x))
-; $BF1$8JQ?t$+!)(B
+; 同じ変数か？
 (define (same-variable? v1 v2)
   (and (variable? v1) (variable? v2) (eq? v1 v2)))
 
-; $BOB$H@Q$N9=@.(B
+; 和と積の構成
 (define (make-sum a1 a2)
   (cond ((=number? a1 0) a2)
         ((=number? a2 0) a1)
@@ -38,26 +38,26 @@
 (define (=number? exp num)
   (and (number? exp) (= exp num)))
 
-; x $B$OOB$+!)(B
+; x は和か？
 (define (sum? x)
   (and (pair? x) (eq? (car x) '+)))
-; $B2C?t(B
+; 加数
 (define (addend s) (cadr s))
-; $BHo2C?t(B
+; 被加数
 (define (augend s) (caddr s))
 
-; x $B$O@Q$+!)(B
+; x は積か？
 (define (product? x)
   (and (pair? x) (eq? (car x) '*)))
-; $B>h?t(B
+; 乗数
 (define (multiplier p) (cadr p))
-; $BHo>h?t(B
+; 被乗数
 (define (multiplicand p) (caddr p))
 
 
 
 ; a.
-; $BOB$H@Q$rDj5A$9$k(B predicate, selector$B!"(Bconstructor$B!"$rJQ99$9$k(B
+; 和と積を定義する predicate, selector、constructor、を変更する
 (define (make-sum a1 a2)
   (cond ((=number? a1 0) a2)
         ((=number? a2 0) a1)
@@ -82,10 +82,10 @@
 (define (multiplicand p) (caddr p))
 
 
-(print (deriv '(x + (3 * (x + (y + 2)))) 'x)) ; 4x' $B"*(B 4
+(print (deriv '(x + (3 * (x + (y + 2)))) 'x)) ; 4x' → 4
 
 
 
 
-; b. predicate, constructor, selector $B$r$$$8$k$@$1$G$O$G$-$J$$$N$G$O(B...
+; b. predicate, constructor, selector をいじるだけではできないのでは...
 

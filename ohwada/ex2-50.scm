@@ -1,4 +1,4 @@
-; $B%U%l!<%`$N(B constructor $B$H(B selector
+; フレームの constructor と selector
 (define (make-frame origin edge1 edge2)
   (list origin edge1 edge2))
 
@@ -16,7 +16,7 @@
 
 
 
-; $B%Y%/%H%k$N(B constructor $B$H(B selector
+; ベクトルの constructor と selector
 (define (make-vect x y) (cons x y))
 (define (xcor-vect vect) (car vect))
 (define (ycor-vect vect) (cdr vect))
@@ -48,7 +48,7 @@
 
 
 
-; segment $B$N(Bconstructor $B$H(B selector
+; segment のconstructor と selector
 (define (make-segment vect1 vect2) (cons vect1 vect2))
 
 (define (start-segment segment) (car segment))
@@ -56,7 +56,7 @@
 
 
 
-; draw-line (2$BE@4V$K@~$r0z$/(B)
+; draw-line (2点間に線を引く)
 (define (draw-line v1 v2)
   (display (xcor-vect v1))
   (display ",")
@@ -83,12 +83,12 @@
 
 
 
-; $B%U%l!<%`(BX $B$rDj5A(B
+; フレームX を定義
 (define X (make-frame (make-vect 150 150) (make-vect 100 0) (make-vect 0 100)))
 
 
 
-; $B;XDj$5$l$?%U%l!<%`$N307A$rIA$/%Z%$%s%?(B
+; 指定されたフレームの外形を描くペインタ
 (define outline-frame
   (segments->painter
    (list
@@ -137,7 +137,7 @@
 (print ((flip-horiz outline-frame) X))
 
 
-; $BH?;~7W<~$j$K(B 180$BEY2sE>(B
+; 反時計周りに 180度回転
 (define (rotate180 painter)
   (transform-painter painter
                      (make-vect 1.0 1.0)
@@ -148,7 +148,7 @@
 (print ((rotate180 outline-frame) X))
 
 
-; 270$BEY2sE>(B
+; 270度回転
 (define (rotate270 painter)
   (transform-painter painter
                      (make-vect 0.0 1.0)

@@ -49,7 +49,7 @@
 
 
 ; a.
-; tree->list-1 $B$H(B tree->list-2 $B$O$I$s$JLZ$KBP$7$F$bF1$87k2L$r@8$8$k(B
+; tree->list-1 と tree->list-2 はどんな木に対しても同じ結果を生じる
 
 
 (define treeA (make-tree 7
@@ -93,5 +93,5 @@
 
 
 ; b.
-; test->list-2 $B$NJ}$,A}2C$,CY$$!)(B
-; $BM}M3(B: test->list-2 $B$OH?I|E*$@$+$i(B
+; test->list-2 の方が増加が遅い？
+; 理由: test->list-2 は反復的だから

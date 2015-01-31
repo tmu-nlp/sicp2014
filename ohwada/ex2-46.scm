@@ -1,10 +1,10 @@
-; $B%Y%/%H%k$N(B constructor $B$H(B selector
+; ベクトルの constructor と selector
 (define (make-vect x y) (cons x y))
 (define (xcor-vect vect) (car vect))
 (define (ycor-vect vect) (cdr vect))
 
 
-; $B%Y%/%H%k$N2C;;!&8:;;!&%9%+%i!<$N>h;;(B
+; ベクトルの加算・減算・スカラーの乗算
 (define (add-vect a b)
   (make-vect
    (+ (xcor-vect a) (xcor-vect b)) (+ (ycor-vect a) (ycor-vect b))))

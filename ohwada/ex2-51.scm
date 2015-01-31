@@ -1,4 +1,4 @@
-; $B%U%l!<%`$N(B constructor $B$H(B selector
+; フレームの constructor と selector
 (define (make-frame origin edge1 edge2)
   (list origin edge1 edge2))
 
@@ -16,7 +16,7 @@
 
 
 
-; $B%Y%/%H%k$N(B constructor $B$H(B selector
+; ベクトルの constructor と selector
 (define (make-vect x y) (cons x y))
 (define (xcor-vect vect) (car vect))
 (define (ycor-vect vect) (cdr vect))
@@ -48,7 +48,7 @@
 
 
 
-; segment $B$N(B constructor $B$H(B selector
+; segment の constructor と selector
 (define (make-segment vect1 vect2) (cons vect1 vect2))
 
 (define (start-segment segment) (car segment))
@@ -56,7 +56,7 @@
 
 
 
-; draw-line (2$BE@4V$K@~$r0z$/(B)
+; draw-line (2点間に線を引く)
 (define (draw-line v1 v2)
   (display (xcor-vect v1))
   (display ",")
@@ -83,12 +83,12 @@
 
 
 
-; $B%U%l!<%`(BX $B$rDj5A(B
+; フレームX を定義
 (define X (make-frame (make-vect 200 200) (make-vect 100 0) (make-vect 0 100)))
 
 
 
-; $B;XDj$5$l$?%U%l!<%`$N307A$rIA$/%Z%$%s%?(B
+; 指定されたフレームの外形を描くペインタ
 (define outline-frame
   (segments->painter
    (list
@@ -116,7 +116,7 @@
 
 
 
-; below (beside $B$K;w$?J}K!(B)
+; below (beside に似た方法)
 (define (below painter1 painter2)
   (let ((paint-below
          (transform-painter painter1
@@ -137,7 +137,7 @@
 
 
 
-; beside $B$H2sE>1i;;$rMQ$$$?(B below
+; beside と回転演算を用いた below
 (define (beside painter1 painter2)
   (let ((split-point (make-vect 0.5 0.0)))
     (let ((paint-left

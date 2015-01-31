@@ -19,9 +19,9 @@
 (print (union-set (list 3 6 4 1 5) (list 4 9 2 1))) ; (3 6 4 1 5 4 9 2 1)
 (print (intersection-set (list 1 3 3 3 2) (list 3 3))) ; (3 3)
 
-; adjoin $B$H(B union $B$,8zN(E*$K=hM}$G$-$k$h$&$K$J$k(B(adjoin $B$O&((B(1), union $B$O&((B(n))
-; union $B$N(B append $B$O&((B(n)$B$@$,!"(B2.59 $B$N(B union $B$O(B element-of-set? ($B&((B(n)) $B$r(B set1 $B$N(B 
-; $BMWAG?t2s8F$S=P$9$N$G%9%F%C%W?t$O(B $B&((B(n^2)$B!#=>$C$F$3$A$i$NJ}$,B.$$(B
+; adjoin と union が効率的に処理できるようになる(adjoin はΘ(1), union はΘ(n))
+; union の append はΘ(n)だが、2.59 の union は element-of-set? (Θ(n)) を set1 の 
+; 要素数回呼び出すのでステップ数は Θ(n^2)。従ってこちらの方が速い
 
-;$BMWAG?t$,A}$($k$N$G(B element-of-set? $B$OCY$/$J$k(B $B"*(B intersection $B$O99$KCY$/$J$k(B
+;要素数が増えるので element-of-set? は遅くなる → intersection は更に遅くなる
  
