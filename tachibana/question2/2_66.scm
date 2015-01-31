@@ -61,8 +61,8 @@
                 (make-record 4 'ringo))))
 
 
-(lookup 1 record)
-(lookup 2 record)
-(lookup 3 record)
-(lookup 4 record)
+(print (lookup 1 record))
+(print (lookup 2 record))
+(print (lookup 3 record))
+(print (lookup 4 record))
 
