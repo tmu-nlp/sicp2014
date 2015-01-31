@@ -102,7 +102,7 @@
 
 (print (encode rock-message rock-song-tree))
 
+(print (length (encode rock-message rock-song-tree)))
 
-
-
-
+; AからWAHまでをそれぞれ八記号アルファベットの固定長符号で表したとすると一文字が3bitなので、最小ビット数は、
+(print (* 3 (length rock-message)))
