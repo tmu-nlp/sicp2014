@@ -8,13 +8,6 @@
 
 (define (weight-leaf x) (caddr x))
 
-
-(define (make-code-tree left right)
-  (list left
-        right
-        (append (symbols left) (symbols right))
-        (+ (weight left) (weight right))))
-
 (define (left-branch tree) (car tree))
 
 (define (right-branch tree) (cadr tree))
@@ -28,20 +21,6 @@
   (if (leaf? tree)
       (weight-leaf tree)
       (cadddr tree)))
-
-(define (adjoin-set x set)
-  (cond ((null? set) (list x))
-        ((< (weight x) (weight (car set))) (cons x set))
-        (else (cons (car set)
-                    (adjoin-set x (cdr set))))))
-
-(define (make-leaf-set pairs)
-  (if (null? pairs)
-      '()
-      (let ((pair (car pairs)))
-        (adjoin-set (make-leaf (car pair)    ; 記号
-                               (cadr pair))  ; 頻度
-                    (make-leaf-set (cdr pairs))))))
 
 (define (memq item x)
   (cond ((null? x) false)
@@ -65,24 +44,12 @@
         ((= bit 1) (right-branch branch))
         (else (error "bad bit -- CHOOSE-BRANCH" bit))))
 
-(define sample-tree
-  (make-code-tree (make-leaf 'A 4)
-                  (make-code-tree
-                   (make-leaf 'B 2)
-                   (make-code-tree (make-leaf 'D 1)
-                                   (make-leaf 'C 1)))))
-; '(A D A B B C A)
-
-(define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
-
-
 (define (encode message tree)
   (if (null? message)
       '()
       (append (encode-symbol (car message) tree)
               (encode (cdr message) tree))))
 
-;ans
 (define (encode-symbol symbol tree)
   (define (enc-iter tree)
     (if (leaf? tree)
@@ -94,20 +61,44 @@
       (enc-iter tree)
       (error "Not Found symbol of " symbol)))
 
-(print (encode '(A D A B B C A) sample-tree))
+(define (make-leaf-set pairs)
+  (if (null? pairs)
+      '()
+      (let ((pair (car pairs)))
+        (adjoin-set (make-leaf (car pair)    ; 記号
+                               (cadr pair))  ; 頻度
+                    (make-leaf-set (cdr pairs))))))
+
+(define (make-code-tree left right)
+  (list left
+        right
+        (append (symbols left) (symbols right))
+        (+ (weight left) (weight right))))
+
+; adjoin-setは木や葉を重さの小さい順に並び替える
+(define (adjoin-set x set)
+  (cond ((null? set) (list x))
+        ((< (weight x) (weight (car set))) (cons x set))
+        (else (cons (car set)
+                    (adjoin-set x (cdr set))))))
+
+(define (generate-huffman-tree pairs)
+  (successive-merge (make-leaf-set pairs)))
+
+; ans
+(define (successive-merge pairs)
+  (if (null? (cdr pairs))
+      (car pairs)
+      (successive-merge
+        (adjoin-set
+          (make-code-tree (car pairs) (cadr pairs))
+          (cddr pairs)))))
+
+(print (generate-huffman-tree '((A 4) (B 2) (C 1) (D 1) (E 6) (F 8))))
 
 
-; symbolsでそのtreeの先のsymbolの要素がわかるのでそれを利用してmemqしてやるのがミソ
-
-
-
-
-
-
-
-
-
-
+; make-leaf-setでleafを重みの小さい順に並び替えて、小さいものの二つから木を作り、そのあと残っている
+; 木と葉を重みが小さい順に並び替えて再帰させて、一つの木になるまでそれを行う.
 
 
 
