@@ -13,6 +13,8 @@
 (define a (list 1 2 3))
 (define b (list 1 2 3 4))
 #?=a
+;#?=(car a)
+;#?=(cdr a)
 #?=(subsets a)
 #?=b
 #?=(subsets b)

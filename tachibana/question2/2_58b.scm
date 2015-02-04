@@ -22,7 +22,7 @@
   (cond ((=number? a1 0) a2)
         ((=number? a2 0) a1)
         ((and (number? a1) (number? a2)) (+ a1 a2))
-        (else (list '+ a1 a2))))
+        (else (list a1 '+ a2))))
 
 (define (=number? exp num)
   (and (number? exp) (= exp num)))
@@ -32,7 +32,7 @@
         ((=number? m1 1) m2)
         ((=number? m2 1) m1)
         ((and (number? m1) (number? m2)) (* m1 m2))
-        (else (list '* m1 m2))))
+        (else (list m1 '* m2))))
 
 
 (define (deriv exp var)
@@ -75,7 +75,7 @@
   (cond ((=number? m2 0) 1)
         ((=number? m2 1) m1)
         ((and (number? m1) (number? m2)) (expt m1 m2))
-        (else (list '** m1 m2))))
+        (else (list m1 '** m2))))
 
 (define (augend s)
   (if (null? (cdddr s))
@@ -92,11 +92,12 @@
 
 (print (deriv '(x + 3) 'x))
 
-(print (deriv '(x + 3 * (x + y + 2)) 'x))
+(print (deriv '(x + 3 * (x * y + 2)) 'x))
 
 (print (deriv '(3 * (x + y + 2)) 'x))
 
-
+; しかし、+と*の演算の順序を上の変更ではしていない。またするとしてもderivの抽象構造自体を変更
+; する必要があると思われるので、この問題は解けないと考えられる。
 
 
 

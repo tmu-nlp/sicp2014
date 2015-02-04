@@ -1,0 +1,1 @@
+("6.1.1" ("1a6459326307cb4e6650916d8f787d9ae222935a" . "c616c8c487419b67c71c4e644de276d226ec2ac4") #"/Users/nagayama/Library/Racket/planet/300/6.1.1/cache/soegaard/sicp.plt/2/1/sicp.rkt" (collects #"racket" #"main.rkt") (collects #"graphics" #"graphics.rkt") (collects #"racket" #"runtime-config.rkt"))
