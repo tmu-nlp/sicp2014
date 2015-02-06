@@ -56,6 +56,10 @@
                 (cons (make-tree this-entry left-tree right-tree) 
                       remaining-elts))))))))
 
+
+;; 順序づけられたリストによる集合の union-set、intersection-set を利用する。
+;; 木構造データをリストに変換してから演算を行い、結果のリストを木構造データに変換する。
+
 ;------------------ 答え --------------------
 
 (define (union-tree tree1 tree2)
@@ -77,5 +81,26 @@
 (define tree2 (list->tree set2))
 ; (4 (2 () ()) (6 () ()))
 
+  ;; 1 ;;
+;;        3
+;;       /|
+;;      1 4
+;;     /  |
+;;    2   5
+
+  ;; 2 ;;
+;;        4
+;;       /|
+;;      2 6
+
 (union-tree tree1 tree2)
+;;        3
+;;       /|
+;;      1 5
+;;     / /|
+;;    2 4 6
+
 (intersection-tree tree1 tree2)
+;;        2
+;;       /
+;;      4

@@ -113,9 +113,10 @@
   (display ")"))
 
  (make-segment (make-point 12 5) (make-point 3 10))
-
 ;; gosh> ((12 . 5) 3 . 10)
 
+(midpoint-segment (make-segment (make-point 12 5) (make-point 3 10)))
+;; (7.5,7.5)
 
 ;;;; Exercise 2.03 ;;;;
 
