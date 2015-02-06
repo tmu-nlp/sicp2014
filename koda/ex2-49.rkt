@@ -1,0 +1,146 @@
+#lang racket
+(require (planet "sicp.ss" ("soegaard" "sicp.plt" 2 1)))
+
+(define (flipped-pairs painter)
+  (let ((painter2 (beside painter (flip-vert painter))))
+    (below painter2 painter2)))
+
+(define (corner-split painter n)
+  (if (= n 0)
+      painter
+      (let ((up (up-split painter (- n 1)))
+            (right (right-split painter (- n 1))))
+        (let ((top-left (beside up up))
+              (bottom-right (below right right))
+              (corner (corner-split painter (- n 1))))
+          (beside (below painter top-left)
+                  (below bottom-right corner))))))
+
+(define (split combine combine-smaller)
+  (define (split-iter painter n)
+    (if (= n 0)
+        painter
+        (let ((smaller (split-iter painter (- n 1))))
+          (combine painter (combine-smaller smaller smaller)))))
+  split-iter)
+
+(define right-split (split beside below))
+(define up-split (split below beside))
+
+(define (square-of-four tl tr bl br)
+  (lambda (painter)
+    (let ((top (beside (tl painter) (tr painter)))
+          (bottom (beside (bl painter) (br painter))))
+      (below bottom top))))
+
+(define (flipped-pair painter)
+  (let ((combine4 (square-of-four identity flip-vert
+                                  identity flip-vert)))
+    (combine4 painter)))
+
+(define (square-limit painter n)
+  (let ((combine4 (square-of-four flip-horiz identity
+                                  rotate180 flip-vert)))
+    (combine4 (corner-split painter n))))
+#|
+(define (segments->painter-o segment-list)
+  (lambda (frame)
+    (for-each
+     (lambda (segment)
+       (draw-line
+        ((frame-coord-map frame)
+         (start-segment segment))
+        ((frame-coord-map frame)
+         (end-segment segment))))
+     segment-list)))
+|#
+(define (make-segment-o start end)
+  (cons start end))
+(define (start-segment segment)
+  (car segment))
+(define (end-segment segment)
+  (cdr segment))
+
+(define frame-outline
+  (let ((p1 (make-vect 0.0 0.0))
+        (p2 (make-vect 1.0 0.0))
+        (p3 (make-vect 1.0 1.0))
+        (p4 (make-vect 0.0 1.0)))
+    (segments->painter
+     (list (make-segment p1 p2)
+           (make-segment p2 p3)
+           (make-segment p3 p4)
+           (make-segment p4 p1)))))
+(define frame-diagonal
+  (let ((p1 (make-vect 0.0 0.0))
+        (p2 (make-vect 1.0 1.0))
+        (p3 (make-vect 1.0 0.0))
+        (p4 (make-vect 0.0 1.0)))
+    (segments->painter
+     (list (make-segment p1 p2)
+           (make-segment p3 p4)))))
+(define frame-diamond
+  (let ((p1 (make-vect 0.5 0.0))
+        (p2 (make-vect 1.0 0.5))
+        (p3 (make-vect 0.5 1.0))
+        (p4 (make-vect 0.0 0.5)))
+    (segments->painter
+     (list (make-segment p1 p2)
+           (make-segment p2 p3)
+           (make-segment p3 p4)
+           (make-segment p4 p1)))))
+
+(define w1 (make-vect 0.00 0.85))
+(define w2 (make-vect 0.17 0.62))
+(define w3 (make-vect 0.30 0.70))
+(define w4 (make-vect 0.42 0.70))
+(define w5 (make-vect 0.38 0.88))
+(define w6 (make-vect 0.40 1.00))
+(define w7 (make-vect 0.62 1.00))
+(define w8 (make-vect 0.65 0.88))
+(define w9 (make-vect 0.60 0.70))
+(define w10 (make-vect 0.75 0.70))
+(define w11 (make-vect 1.00 0.40))
+(define w12 (make-vect 1.00 0.20))
+(define w13 (make-vect 0.70 0.55))
+(define w14 (make-vect 0.64 0.48))
+(define w15 (make-vect 0.78 0.00))
+(define w16 (make-vect 0.62 0.00))
+(define w17 (make-vect 0.52 0.30))
+(define w18 (make-vect 0.40 0.00))
+(define w19 (make-vect 0.25 0.00))
+(define w20 (make-vect 0.40 0.50))
+(define w21 (make-vect 0.35 0.56))
+(define w22 (make-vect 0.15 0.43))
+(define w23 (make-vect 0.00 0.65))
+
+(define wave 
+  (segments->painter 
+   (list (make-segment w1 w2)
+         (make-segment w2 w3)
+         (make-segment w3 w4)
+         (make-segment w4 w5)
+         (make-segment w5 w6)
+         (make-segment w7 w8)
+         (make-segment w8 w9)
+         (make-segment w9 w10)
+         (make-segment w10 w11)
+         (make-segment w12 w13)
+         (make-segment w13 w14)
+         (make-segment w14 w15)
+         (make-segment w16 w17)
+         (make-segment w17 w18)
+         (make-segment w19 w20)
+         (make-segment w20 w21)
+         (make-segment w21 w22)
+         (make-segment w22 w23)
+         )))
+
+(define wave2 (beside wave (flip-vert wave)))
+(define wave4 (flipped-pairs wave))
+(define wave-right (right-split wave 2))
+(define wave-corner (corner-split wave 2))
+
+(paint frame-outline)
+(paint frame-diagonal)
+(paint frame-diamond)

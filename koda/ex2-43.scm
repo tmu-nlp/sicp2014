@@ -78,6 +78,7 @@
 (define (flatmap proc seq)
   (accumulate append () (map proc seq)))
 
+
 (define (prime-sum? pair)
   (prime? (+ (car pair) (cadr pair))))
 
@@ -102,12 +103,65 @@
 			 (map (lambda (j) (list i j))
 				  (enumerate-interval 1 (- i 1))))
 		   (enumerate-interval 1 n)))
-(print (unique-pairs 3))
 
 (define (prime-sum-pairs n)
   (map make-pair-sum
 	   (filter prime-sum?
 			   (unique-pairs n))))
-(print (prime-sum-pairs 3))
 
+(define (unique-triples n)
+  (flatmap (lambda (i)
+			 (flatmap (lambda (j)
+					(map (lambda (k) (list i j k))
+						 (enumerate-interval 1 (- j 1))))
+				  (enumerate-interval 1 (- i 1))))
+		   (enumerate-interval 1 n)))
 
+(define (same-sum-triples n s)
+  (define (same-sum? triple)
+	(= (sum triple) s))
+  (filter same-sum?
+		  (unique-triples n)))
+
+(define (sum triple)
+  (+ (car triple) (cadr triple) (caddr triple)))
+
+(define (queens board-size)
+  (define (queen-cols k)
+	(if (= k 0)
+	  (list empty-board)
+	  (filter
+		(lambda (positions) (safe? k positions))
+		(flatmap
+		  (lambda (new-row)
+			(map (lambda (rest-of-queens)
+				   (adjoin-position new-row
+									k
+									rest-of-queens))
+				 (queen-cols (- k 1))))
+		  (enumerate-interval 1 board-size)))))
+  (queen-cols board-size))
+(define empty-board ())
+(define (adjoin-position new-row k rest-of-queens)
+  (append (list new-row) rest-of-queens))
+(define (safe? k positions)
+  (define (safe-rest? k new-row i positions)
+	(if (null? positions)
+	  #t
+	  (let ((next-row (car positions)))
+		(and (not (= next-row new-row))
+			 (not (= next-row (+ new-row i)))
+			 (not (= next-row (- new-row i)))
+			 (safe-rest? k new-row (+ i 1) (cdr positions))))))
+	(safe-rest? k (car positions) 1 (cdr positions)))
+(print (queens 5))
+(print (queens 6))
+(print (queens 7))
+;(print (queens 8))
+;42
+;T(k) = k
+;queen-cols kでqueen-cols - k 1 を一回呼び出してるため
+;43
+;T(k) = m*T(k-1)+1 = (n^k-1)/(n-1) =~ n^n-1
+;queen-cols kでqueen-cols - k 1 をboard-size回呼び出してるため
+;k^k-1/k=k^n-2
