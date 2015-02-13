@@ -41,22 +41,28 @@
 ;;   ↓ make-exponentiation (**)
 ;;    ↓ '(** x 5) -> '(* 5 (** x 4))
 
+;構成子
+(define (make-exponentiation base exponent)
+  ;簡約化
+  (cond ((=number? exponent 1) base)
+        ((=number? exponent 0) 1)
+        (else (list '** base exponent))))
+;述語
 (define (exponentiation? x)
   (and (pair? x)
        (eq? (car x) '**)))
 
-(define (make-exponentiation base exponent)
-  (cond ((=number? exponent 1) base)
-        ((=number? exponent 0) 1)
-        (else (list '** base exponent))))
-
+;選択子(基数)
 (define (base x)
   (cadr x))
 
+;選択子(乗数)
 (define (exponent x)
   (caddr x))
 
 ; --------------------
+;この微分の規則を、deriv に組み込み.
+;condに追加.
 
 (define (deriv exp var)
   (cond ((number? exp) 0)

@@ -24,18 +24,24 @@
     (check 1 positions)))
 
 (define (queens board-size)
-  (define (queen-cols k)
+  (define queen-col-count 0)　　　　　　　　　　　　　　　　　　;追加
+  (define (queen-col k)
+    (set! queen-col-count (+ 1 queen-col-count))
     (if (= k 0)
-        (list empty-board)
-        (filter
-         (lambda (positions) (safe? k positions))
-         (flatmap
-          (lambda (rest-of-queens)
-            (map (lambda (new-row)
-                   (adjoin-position new-row k rest-of-queens))
-                 (enumerate-interval 1 board-size)))
-          (queen-cols (- k 1))))))
-  (queen-cols board-size))
+	(list empty-board)
+	(filter
+	 (lambda (positions) (safe? k positions))
+	 (flatmap
+	  (lambda (rest-of-queens)
+	    (map (lambda (new-row)
+		   (adjoin-position new-row k rest-of-queens))
+		 (enumerate-interval 1 board-size)))
+	  (queen-col (- k 1))))))
+  (print (queen-col board-size))
+  (newline)
+  (newline)
+  (print queen-col-count))
+
 
 (flatmap
  (lambda (rest-of-queens)

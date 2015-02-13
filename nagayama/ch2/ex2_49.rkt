@@ -65,18 +65,18 @@
              (make-segment v3 v0))))))
 
 ; [d] wave(人形)  
-(define w1 (make-vect 0.00 0.85))
-(define w2 (make-vect 0.17 0.62))
-(define w3 (make-vect 0.30 0.70))
-(define w4 (make-vect 0.42 0.70))
-(define w5 (make-vect 0.38 0.88))
-(define w6 (make-vect 0.40 1.00))
+(define w1 (make-vect 0.00 0.75))
+(define w2 (make-vect 0.19 0.57))
+(define w3 (make-vect 0.33 0.70))
+(define w4 (make-vect 0.45 0.68))
+(define w5 (make-vect 0.35 0.82))
+(define w6 (make-vect 0.46 1.00))
 
-(define w7 (make-vect 0.62 1.00))
-(define w8 (make-vect 0.65 0.88))
-(define w9 (make-vect 0.60 0.70))
-(define w10 (make-vect 0.75 0.70))
-(define w11 (make-vect 1.00 0.40))
+(define w7 (make-vect 0.56 1.00))
+(define w8 (make-vect 0.67 0.82))
+(define w9 (make-vect 0.57 0.68))
+(define w10 (make-vect 0.72 0.70))
+(define w11 (make-vect 1.00 0.30))
 
 (define w12 (make-vect 1.00 0.20))
 (define w13 (make-vect 0.70 0.55))
@@ -90,7 +90,7 @@
 (define w19 (make-vect 0.25 0.00))
 (define w20 (make-vect 0.40 0.50))
 (define w21 (make-vect 0.35 0.56))
-(define w22 (make-vect 0.15 0.43))
+(define w22 (make-vect 0.17 0.45))
 (define w23 (make-vect 0.00 0.65))
 
 (define wave 

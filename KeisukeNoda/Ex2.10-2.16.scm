@@ -29,11 +29,9 @@
 
 (div-interval R1 R2)
 ;; gosh> (1.0 . 10.0)
-;; good job!
 
 (div-interval R1 R3)
 ;; gosh> (-2.0 . -0.5)
-;; good job!!!
 
 (div-interval R1 R4)
 ;; gosh> (-2.0 . 1.0)

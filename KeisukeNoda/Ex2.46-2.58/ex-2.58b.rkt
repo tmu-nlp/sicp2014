@@ -72,7 +72,7 @@
 
 (define (exponent x)
   (caddr x))
-; ------
+; ------------------------
 
 (define (deriv exp var)
   (cond ((number? exp) 0)
