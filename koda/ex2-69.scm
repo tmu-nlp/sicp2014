@@ -58,26 +58,14 @@
   (cond ((null? set) #f)
 		((equal? x (car set)) #t)
 		(else (element-of-set? x (cdr set)))))
-#|
-(define (adjoin-set x set)
-  (if (element-of-set? x set)
-	set
-	(cons x set)))
-|#
+
 (define (intersection-set set1 set2)
   (cond ((or (null? set1) (null? set2)) '())
 		((element-of-set? (car set1) set2)
 		 (cons (car set1)
 			   (intersection-set (cdr set1) set2)))
 		(else (intersection-set (cdr set1) set2))))
-#|
-(define (union-set set1 set2)
-  (cond ((null? set1) set2)
-		((element-of-set? (car set1) set2)
-		 (union-set (cdr set1) set2))
-		(else (cons (car set1)
-					(union-set (cdr set1) set2)))))
-|#
+
 (define (element-of-set? x set)
   (cond ((null? set) #f)
 		((equal? x (car set)) #t)
@@ -88,7 +76,6 @@
 		 (cons (car set1)
 			   (intersection-set (cdr set1) set2)))
 		(else (intersection (cdr set1) set2))))
-(define adjoin-set cons)
 (define union-set append)
 
 (define (element-of-set? x set)
@@ -127,21 +114,11 @@
   (list entry left right))
 (define (element-of-set? x set)
   (cond ((null? set) #f)
-		((= x (entry set)) 3t)
+		((= x (entry set)) #t)
 		((< x (entry set))
 		 (element-of-set? x (left-branch set)))
 		((> x (entry set))
 		 (element-of-set? x (right-branch set)))))
-(define (adjoin-set x set)
-  (cond ((null? set) (make-tree x '() '()))
-		((= x (entry set)) set)
-		((< x (entry set))
-		 (make-tree (entry set)
-					(adjoin-set x (left-branch set))
-					(right-branch set)))
-		((> x (entry set))
-		 (make-tree (entry set) (left-branch set)
-					(adjoin-set x (right-branch set))))))
 
 (define (tree->list-1 tree)
   (if (null? tree)
@@ -161,23 +138,128 @@
 							result-list)))))
   (copy-to-list tree '()))
 
-(define (make-leaf entry)
-  (make-tree entry '() '()))
-(define tree1 (make-tree 7
-						 (make-tree 3 (make-leaf 1) (make-leaf 5))
-						 (make-tree 9 '() (make-leaf 11))))
-(define tree2 (make-tree 3
-						 (make-leaf 1)
-						 (make-tree 7
-									(make-leaf 5)
-									(make-tree 9 '() (make-leaf 11)))))
-(define tree3 (make-tree 5
-						 (make-tree 3 (make-leaf 1) '())
-						 (make-tree 9 (make-leaf 7) (make-leaf 11))))
+(define (list->tree elements)
+  (car (partial-tree elements (length elements))))
+(define (partial-tree elts n)
+  (if (= n 0)
+	(cons '() elts)
+	(let ((left-size (quotient (- n 1) 2)))
+	  (let ((left-result
+			  (partial-tree elts left-size)))
+		(let ((left-tree (car left-result))
+			  (non-left-elts (cdr left-result))
+			  (right-size (- n (+ left-size 1))))
+		  (let ((this-entry (car non-left-elts))
+				(right-result
+				  (partial-tree
+					(cdr non-left-elts)
+					right-size)))
+			(let ((right-tree (car right-result))
+				  (remaining-elts
+					(cdr right-result)))
+			  (cons (make-tree this-entry
+							   left-tree
+							   right-tree)
+					remaining-elts))))))))
 
-(print (tree->list-1 tree1))
-(print (tree->list-2 tree1))
-(print (tree->list-1 tree2))
-(print (tree->list-2 tree2))
-(print (tree->list-1 tree3))
-(print (tree->list-2 tree3))
+(define (intersection-set-tree tree1 tree2)
+  (list->tree (intersection-set (tree->list-1 tree1)
+								(tree->list-1 tree2))))
+(define (union-set-tree tree1 tree2)
+  (list->tree (union-set (tree->list-1 tree1)
+						 (tree->list-1 tree2))))
+
+(define (make-leaf symbol weight)
+  (list 'leaf symbol weight))
+(define (leaf? object)
+  (eq? (car object) 'leaf))
+(define (symbol-leaf x) (car x))
+(define (weight-leaf x) (caddr x))
+
+(define (make-code-tree left right)
+  (list left
+		right
+		(append (symbols left)
+				(symbols right))
+		(+ (weight left)
+		   (weight right))))
+
+(define (left-branch tree) (car tree))
+(define (right-branch tree) (cadr tree))
+
+(define (symbols tree)
+  (if (leaf? tree)
+	(list (symbol-leaf tree))
+	(caddr tree)))
+(define (weight tree)
+  (if (leaf? tree)
+	(weight-leaf tree)
+	(cadddr tree)))
+
+(define (decode bits tree)
+  (define (decode-1 bits current-branch)
+	(if (null? bits)
+	  '()
+	  (let ((next-branch
+			  (choose-branch
+				(car bits) current-branch)))
+		(if (leaf? next-branch)
+		  (cons (symbol-leaf next-branch)
+				(decode-1 (cdr bits) tree))
+		  (decode-1 (cdr bits) next-branch)))))
+  (decode-1 bits tree))
+(define (choose-branch bit branch)
+  (cond ((= bit 0) (left-branch branch))
+		((= bit 1) (right-branch branch))
+		(else (display "bad bit: CHOOSE-BRANCH"))))
+
+(define (adjoin-set x set)
+  (cond ((null? set) (list x))
+		((< (weight x) (weight (car set)))
+		 (cons x set))
+		(else (cons (car set)
+					(adjoin-set x (cdr set))))))
+
+(define (make-leaf-set pairs)
+  (if (null? pairs)
+	'()
+	(let ((pair (car pairs)))
+	  (adjoin-set (make-leaf (car pair)
+							 (cadr pair))
+				  (make-leaf-set (cdr pairs))))))
+
+(define sample-tree
+  (make-code-tree (make-leaf 'A 4)
+				  (make-code-tree
+					(make-leaf 'B 2)
+					(make-code-tree (make-leaf 'D 1)
+									(make-leaf 'C 1)))))
+(define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
+
+(define (encode message tree)
+  (if (null? message)
+	'()
+	(append (encode-symbol (car message) tree)
+			(encode (cdr message) tree))))
+
+(define (encode-symbol symbol tree)
+  (if (leaf? tree)
+	'()
+	(cond ((element-of-set? symbol (symbols (left-branch tree)))
+		  (cons 0 (encode-symbol symbol (left-branch tree))))
+	((element-of-set? symbol (symbols (right-branch tree)))
+	 (cons 1 (encode-symbol symbol (right-branch tree))))
+	(else
+	  (display "bad symbol --ENCODE-SYMBOL")))))
+
+(define (successive-merge ordered-leaf-set)
+  (if (null? (cdr ordered-leaf-set))
+	(car ordered-leaf-set)
+	(successive-merge (adjoin-set (make-code-tree (car ordered-leaf-set)
+												  (cadr ordered-leaf-set))
+								  (cddr ordered-leaf-set)))))
+(define (generate-huffman-tree pairs)
+  (successive-merge (make-leaf-set pairs)))
+
+(print (generate-huffman-tree '((A 4) (B 2) (C 1) (D 1))))
+

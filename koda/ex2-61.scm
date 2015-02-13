@@ -109,9 +109,9 @@
 				 (intersection-set set1 (cdr set2)))))))
 
 (define (adjoin-set x set)
-  (cond ((null? set) (< x (car set))) (cons x set))
-  ((= x (car set)) set)
-  (else (cons (car set) (adjoin-set x (cdr set)))))
+  (cond ((or (null? set) (< x (car set))) (cons x set))
+		((= x (car set)) set)
+		(else (cons (car set) (adjoin-set x (cdr set))))))
 
 (print (adjoin-set '3 '(3 4 5)))
 
