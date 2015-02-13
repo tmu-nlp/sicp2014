@@ -1,19 +1,5 @@
 #lang planet neil/sicp
 
-;;; Exercise 2.88.
-;;; 
-;;; Defining a "generic negation operation" seems unnecessary, as
-;;; negation is just multiplication by the polynomial -1 and we have
-;;; that already. However since even constant polynomials in our system
-;;; have a "variable" they are defined over, negation means constructing
-;;; a -1 polynomial to match the variable of interest, which warrants some
-;;; abstraction.
-;;;
-;;; I chose to implement multiplication and addition between
-;;; polynomials and numbers, but not to have "sub" as a generic
-;;; operation. Instead "sub" means multiplying by -1 and
-;;; adding.
-
 (define (demo)
   (install-polynomial-package)
   (let ((p1 (make-polynomial 'x '((0 1) (5 1) (10 2))))
@@ -33,17 +19,12 @@
     ((trace 'add add) ppa ppb)
     ((trace 'sub sub) pa pb)))
 
-                                        ;                    GENERIC FUNCTIONS
-
 (define (add x y) (apply-generic 'add x y))
 (define (sub x y) (apply-generic 'add x (mul y -1)))
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
 (define (=zero? x) (apply-generic '=zero? x))
 (define (raise x) (apply-generic 'raise x))
-
-
-                                        ;                    POLYNOMIAL PACKAGE
 
 (define (make-polynomial var terms)
   ((get 'make 'polynomial) var terms))
@@ -132,8 +113,6 @@
     (all =zero? (map coeff (term-list p))))
   
   (define (combine-number-poly op n p)
-    ;; Elevate a number to a compatible polynomial,
-    ;; then retag both and combine generically.
     (let ((tn (make-scheme-number n)))
       (let ((p2 (make-constant-poly (variable p) tn)))
         (apply-generic op (tag p2) (tag p)))))
@@ -167,11 +146,9 @@
   
   'done)
 
-                                        ;                     APPLY GENERIC
 (define (apply-generic op . args)
   (let* ((types (map type-tag args))
          (proc (get op types)))
-    ;;(show " types ->" types "proc ->" proc)
     (if proc
         (apply proc (map contents args))
         (let* ((raised (raise-list args))
@@ -191,7 +168,6 @@
         (else (error "No type tag" datum))))
 
 
-                                        ;                     DISPATCH TABLES
 (define (contents datum)
   (cond ((number? datum) datum)
         ((pair? datum) (cdr datum))
@@ -229,11 +205,9 @@
   (put op (list type2 type1) (lambda (x y) (proc y x))))
 
 
-                                        ;                     NUMERIC TOWER
 (define tower '(scheme-number polynomial))
 
 (define (compare-tower x y)
-  ;;return 1 if type y is higher, -1 if type x is higher, 0 if equal
   (define (step-up-tower ranks)
     (if (null? ranks)
         (error "Types not on tower" (list x y))
@@ -256,7 +230,6 @@
   (fold-left pick-highest (car tower) list))
 
 (define (raise-to target arg)
-  ;; repeatedly raise the argument until it is at the required type.
   (if (equal? (type-tag arg) target) arg
       (raise-to target (raise arg))))
 
@@ -265,7 +238,6 @@
     (map (lambda (x) (raise-to target x)) args)))
 
 
-                                        ;                    NUMBER TYPE
 (define (make-scheme-number n)
   ((get 'make 'scheme-number) n))
 (define (install-scheme-number-package)
@@ -284,10 +256,8 @@
   (put 'make 'scheme-number (lambda (x) x))
   'done)
 
-
-                                        ;                     DEBUGGING/UTIL
 (define (show . args)
-  ;; write a debugging message.
+  ; debugging message.
   (cond ((null? args)
          (display "\n"))
         ((string? (car args))
@@ -323,15 +293,10 @@
 
 
 (define (all pred list)
-  ;; apply predicate to each item; return #t if all results are non-#f.
   (if (null? list)
       #t
       (and (pred (car list)) (all pred (cdr list)))))
 
-
-                                        ;                    INSTALLING / TRACING
-
-;; (set! apply-generic (trace 'apply-generic apply-generic))
 
 (install-polynomial-package)
 (install-scheme-number-package)

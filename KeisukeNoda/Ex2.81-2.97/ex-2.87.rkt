@@ -1,10 +1,6 @@
 #lang planet neil/sicp
 
-;;; Exercise 2.87.
-;;;
-;;; =zero? is added to the poiynomial package below. A test of adding
-;;; polynomials with compatible polynomial coefficients is added to
-;;; (demo).
+
 
 (define (demo)
   (install-polynomial-package)
@@ -24,17 +20,12 @@
     ((trace 'mul mul) pa pb)
     ((trace 'add add) ppa ppb)))
 
-                                        ;                    GENERIC FUNCTIONS
-
 (define (add x y) (apply-generic 'add x y))
 (define (sub x y) (apply-generic 'sub x y))
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
 (define (=zero? x) (apply-generic '=zero? x))
 (define (raise x) (apply-generic 'raise x))
-
-
-                                        ;                    POLYNOMIAL PACKAGE
 
 (define (make-polynomial var terms)
   ((get 'make 'polynomial) var terms))
@@ -133,11 +124,9 @@
   'done)
 
 
-                                        ;                     APPLY GENERIC
 (define (apply-generic op . args)
   (let* ((types (map type-tag args))
          (proc (get op types)))
-                                        ;(show " types ->" types "proc ->" proc)
     (if proc
         (apply proc (map contents args))
         (let* ((raised (raise-list args))
@@ -157,7 +146,6 @@
         (else (error "No type tag" datum))))
 
 
-                                        ;                     DISPATCH TABLES
 (define (contents datum)
   (cond ((number? datum) datum)
         ((pair? datum) (cdr datum))
@@ -190,13 +178,9 @@
         (update type-tables table
                 (update (lookup type-tables table) key value))))
 
-
-
-                                        ;                     NUMERIC TOWER
 (define tower '(scheme-number polynomial))
 
 (define (compare-tower x y)
-  ;;return 1 if type y is higher, -1 if type x is higher, 0 if equal
   (define (step-up-tower ranks)
     (if (null? ranks)
         (error "Types not on tower" (list x y))
@@ -219,7 +203,6 @@
   (fold-left pick-highest (car tower) list))
 
 (define (raise-to target arg)
-  ;; repeatedly raise the argument until it is at the required type.
   (if (equal? (type-tag arg) target) arg
       (raise-to target (raise arg))))
 
@@ -228,7 +211,6 @@
     (map (lambda (x) (raise-to target x)) args)))
 
 
-                                        ;                    NUMBER TYPE
 (define (install-scheme-number-package)
   (put 'e^ '(scheme-number) exp)
   (put 'cosine '(scheme-number) cos)
@@ -247,9 +229,8 @@
   'done)
 
 
-                                        ;                     DEBUGGING/UTIL
 (define (show . args)
-  ;; write a debugging message.
+  ; debugging message.
   (cond ((null? args)
          (display "\n"))
         ((string? (car args))
@@ -285,13 +266,9 @@
 
 
 (define (all pred list)
-  ;; apply predicate to each item; return #t if all results are non-#f.
   (if (null? list)
       #t
       (and (pred (car list)) (all pred (cdr list)))))
-
-
-                                        ;                    INSTALLING / TRACING
 
 ;; (set! apply-generic (trace 'apply-generic apply-generic))
 

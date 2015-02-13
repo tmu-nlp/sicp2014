@@ -75,13 +75,11 @@
       ((get-coercion (type-tag data) to) data)))
 
 (define (try-list pred list)
-  ;return first item that satisfies a predicate, or #f
   (if (null? list) #f
       (or (and (pred (car list)) (car list))
           (try-list pred (cdr list)))))
 
 (define (all pred list)
-  ; apply predicate to each item; return #t if all results are non-#f.
   (if (null? list)
       #t
       (and (pred (car list)) (all pred (cdr list)))))
@@ -90,12 +88,9 @@
   (if (equal? from to) #t (get-coercion from to)))
 
 (define (coercions-exist? from-list to)
-  ;; return something true if all types in `from-list` can be coerced to `to`.
   (all (lambda (from) (coercion-exists? from to)) from-list))
 
 (define (find-coercion from-list to-list)
-  ;; Return one element of to-list if all types in from-list have a coercion
-                                        ;l to it. Else return false.
   (try-list (lambda (to) (coercions-exist? from-list to)) to-list))
 
 (define (apply-generic-casting-n op . args)
@@ -112,12 +107,12 @@
 
 ;;; Exercise 2.83
 
-;; I guess we will need an integer and a "real" (i.e. float) package.
+
 (define (make-integer x) ((get 'make '(integer)) x))
 (define (install-integer-package)
   (put 'make '(integer)
        (lambda (x) (if (integer? x)
-                  (attach-tag 'integer (floor x)) ; i.e. use a Scheme integer
+                  (attach-tag 'integer (floor x)) ;Scheme integer つかってる
                   (error "Not an integer:" x))))
   (put 'add '(integer integer)
        (lambda (x y) (make-integer (+ x y))))
@@ -127,11 +122,7 @@
        (lambda (x y) (make-integer (* x y))))
   (put 'equ? '(integer integer) equal?))
 
-;; It bothers me that "real" is considered higher in the hierarchy
-;; than "rational" since every _possible_ "real" is also a rational
-;; (barring NaNs and negative zeros.) But this is what A&S ask for,
-;; passing the actual worrying-about-floats off to a numerical analyst
-;; or some other kind of magician.
+
 (define (make-real x) ((get 'make '(real)) x))
 (define (install-real-package)
   (put 'make '(real)
@@ -146,8 +137,7 @@
        (lambda (x y) (make-real (* x y))))
   (put 'equ? '(real real) equal?))
 
-;;Anyway, here is a "raise" operation.
-;; do not not just use whichever apply-generic is in play; see Ex. 2.85
+
 (define (raise x) (apply-generic-raising 'raise x))
 (define (install-raisers-package)
   (define (integer->rational x) (make-rational x 1))
@@ -163,14 +153,9 @@
 
 ;;; Exercise 2.84
 
-;; I chose to hold the numeric towser as a list in a variable. To add
-;; types to the tower, implement their raise operations and add them
-;; name to this list.
-
 (define tower '(integer rational real complex))
 
 (define (compare-tower x y)
-  ;return 1 if type y is higher, -1 if type x is higher, 0 if equal
   (define (step-up-tower ranks)
     (if (null? ranks)
         (error "Types not on tower" (list x y))
@@ -193,7 +178,6 @@
   (fold-left pick-highest (car tower) list))
 
 (define (raise-to target arg)
-  ;; repeatedly raise the argument until it is at the required type.
   (if (equal? (type-tag arg) target) arg
       (raise-to target (raise arg))))
 
@@ -201,10 +185,6 @@
   (let ((target (highest-type (map type-tag args))))
     (map (lambda (x) (raise-to target x)) args)))
 
-;; Then the apply-generic becomes this. Note that this will not
-;; recognize cases where types must be raised in order to access the
-;; given operation. For example `(div (make-integer 3) (make-integer 4)`
-;; will fail to notice that `div `(rational rational)` exists
 (define (apply-generic-raising op . args)
   (let* ((types (map type-tag args))
          (proc (get op types)))
@@ -218,17 +198,6 @@
               (error "No method and no casting" (list op types)))))))
 
 ;;; Exercise 2.85
-
-;; An unexpected difficulty I found was that `apply-generic-dropping`
-;; drops something, then tests if it is equ? to the original thing,
-;; which calls generic `equ`, which causes a `raise` operation, which
-;; is generic -- so (apply-generic-dropping 'raise thing( immediately
-;; attempts to drop the raised thing again, so raise--to raises again,
-;; then apply-generic drops it, back and forth in a cycle.
-;;
-;; Thus I adjusted `raise` above to use a specific non-dropping
-;; version of apply-generic. Similarly, dropping the result of
-;; 'project' seems redundant.
 
 ;; (add (make-complex-from-real-imag 3.25 0)
 ;;      (make-complex-from-mag-ang 2.75 0))
@@ -244,8 +213,7 @@
        (lambda (x) (make-real (real-part x)))))
 
 (define (drop x)
-  ;;only bother dropping something if the type is
-  ;;higher than the bottom type and has a `project` method.
+
   (let* ((type (type-tag x))
          (proj (get 'project (list type))))
     (if proj
@@ -261,8 +229,7 @@
   (let ((result (apply apply-generic-raising (cons op args))))
     (let ((dropped (drop result)))
       dropped)))
-
-                                        ;; newly written to backfill book
+                        
 (define (show . args)
   (cond ((null? args)
          (display "\n"))
@@ -287,7 +254,6 @@
   (let ((result (lookup (lookup coercion-tables from) to)))
     (if (null? result) #f result)))
 
-                                        ;; newly from book
 (define (install-coercions-package)
   (define (scheme-number->complex n)
     (make-complex-from-real-imag (contents n) 0))
@@ -295,8 +261,6 @@
                 'complex
                 scheme-number->complex)
   'done)
-
-                                        ;; PREVIOUSLY WRITTEN + changes
 
 (define (add x y) (apply-generic 'add x y))
 (define (sub x y) (apply-generic 'sub x y))
@@ -363,11 +327,7 @@
 (define (type-tag datum)
   (cond ((number? datum) 'scheme-number)
         ((pair? datum) (car datum))
-        (else 'nonpair))) ;error message removed, since `equ?`returns
-                          ;primitive booleans and
-                          ;apply-generic-dropping tries to generically
-                          ;drop results.
-
+        (else 'nonpair))) 
 (define (contents datum)
   (cond ((number? datum) datum)
         ((pair? datum) (cdr datum))
@@ -551,7 +511,7 @@
 (install-raisers-package)
 (install-project-package)
 (set! apply-generic apply-generic-dropping)
-                                        ; MORE PREVIOUSLY FROM BOOK
+                               
 (define (square x) (* x x))
 
 (define (fold-left op initial sequence)

@@ -1,20 +1,4 @@
 #lang planet neil/sicp
-;;; Exercise 2.86
-
-;; Here I chose to rip out the support for "lowering" along
-;; the numeric tower (for now) as it was wreaking havoc on the
-;; composite-complex-number problem. So this answers 2.86 without also
-;; supporting answering 2.85.
-
-;; I have also removed the 'scheme-number nonsense, on the grounds
-;; that this is what we've been aiming for, complete numeric tower
-;; built atop Scheme without directly exposing Scheme data types.
-
-;; Actually implementing generic components of complex numbers is a
-;; matter of making sure to use generic forms mul, sub, add, div,
-;; sine, cosine, arctan in the complex package, and providing generic
-;; methods for those procedures in each numeric package (they usually
-;; just construct a real).
 
 (define (demo)
   (let* ((i2 (make-integer 2))
@@ -29,7 +13,7 @@
     ((trace 'mul mul) cri4i5 cri2q3_5)
     ((trace 'mul mul) cpi5i4 cpq3_5i2)
     ((trace 'div div) cpq3_5i2 cpi5i4)))
-                                        ;                    GENERIC FUNCTIONS
+                                      
 (define (e^ x) (apply-generic 'e^ x))
 (define (sine x) (apply-generic 'sine x))
 (define (cosine x) (apply-generic 'cosine x))
@@ -50,9 +34,9 @@
 
 
 
-                                        ;                     DEBUGGING/UTIL
+                               
 (define (show . args)
-  ;; write a debugging message.
+  ; debugging message.
   (cond ((null? args)
          (display "\n"))
         ((string? (car args))
@@ -87,12 +71,9 @@
   (iter initial sequence))
 
 
-
-                                        ;                     APPLY GENERIC
 (define (apply-generic op . args)
   (let* ((types (map type-tag args))
          (proc (get op types)))
-    ;(show " types ->" types "proc ->" proc)
     (if proc
         (apply proc (map contents args))
         (let* ((raised (raise-list args))
@@ -113,11 +94,9 @@
 
 
 
-                                        ;                     NUMERIC TOWER
 (define tower '(integer rational real complex))
 
 (define (compare-tower x y)
-  ;;return 1 if type y is higher, -1 if type x is higher, 0 if equal
   (define (step-up-tower ranks)
     (if (null? ranks)
         (error "Types not on tower" (list x y))
@@ -140,7 +119,6 @@
   (fold-left pick-highest (car tower) list))
 
 (define (raise-to target arg)
-  ;; repeatedly raise the argument until it is at the required type.
   (if (equal? (type-tag arg) target) arg
       (raise-to target (raise arg))))
 
@@ -149,8 +127,6 @@
     (map (lambda (x) (raise-to target x)) args)))
 
 
-
-                                        ;                     DISPATCH TABLES
 (define (contents datum)
   (cond ((number? datum) datum)
         ((pair? datum) (cdr datum))
@@ -183,14 +159,6 @@
         (update type-tables table
                 (update (lookup type-tables table) key value))))
 
-
-
-
-
-                                        ;                     NUMERIC TOWER TYPES
-
-;;this function allows resting as much as possible on scheme numerics, which may be
-;;sort of cheating the intent of the problem.
 (define (make-number x)
   (cond
    ((integer? x) (make-integer x))
@@ -202,7 +170,7 @@
 (define (install-integer-package)
   (put 'make 'integer
        (lambda (x) (if (integer? x)
-                       (attach-tag 'integer (floor x)) ; i.e. use a Scheme integer
+                       (attach-tag 'integer (floor x)) ; Scheme integer つかってる
                        (error "Not an integer:" x))))
 
   (put 'e^ '(integer) (lambda (x) (make-real (exp x))))
@@ -293,23 +261,6 @@
        (lambda (x y) (make-real (* x y)))))
 
 
-;; (define (install-scheme-number-package)
-;;   (put 'e^ '(scheme-number) exp)
-;;   (put 'cosine '(scheme-number) cos)
-;;   (put 'sine '(scheme-number) sin)
-;;   (put 'add '(scheme-number scheme-number)
-;;        (lambda (x y) (+ x y)))
-;;   (put 'sub '(scheme-number scheme-number)
-;;        (lambda (x y) (- x y)))
-;;   (put 'mul '(scheme-number scheme-number)
-;;        (lambda (x y) (* x y)))
-;;   (put 'div '(scheme-number scheme-number)
-;;        (lambda (x y) (/ x y)))
-;;   'done)
-
-
-
-                                        ;                    COMPLEX TYPES
 (define (make-complex-from-real-imag x y)
   ((get 'make-from-real-imag '(complex)) x y))
 
@@ -317,7 +268,6 @@
   ((get 'make-from-mag-ang '(complex)) r a))
 
 (define (install-complex-package)
-  ;; imported procedures from rectagular and polar packages
   (define (make-from-real-imag x y)
     ((get 'make-from-real-imag '(rectangular)) x y))
   (define (make-from-mag-ang r a)
@@ -399,8 +349,6 @@
        (lambda (r a) (tag (make-from-mag-ang r a))))
   'done)
 
-
-                                        ;                     INSTALL PACKAGES
 ;(install-scheme-number-package)
 (install-integer-package)
 (install-rational-package)
@@ -409,9 +357,6 @@
 (install-polar-package)
 (install-rectangular-package)
 
-
-
-                                        ;                     SET TRACES
 ;;(set! apply-generic (trace 'apply-generic apply-generic))
 ;;(set! raise-to (trace 'raise-to raise-to))
 ;;(set! raise (trace 'raise raise))
