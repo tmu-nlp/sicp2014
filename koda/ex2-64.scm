@@ -58,26 +58,14 @@
   (cond ((null? set) #f)
 		((equal? x (car set)) #t)
 		(else (element-of-set? x (cdr set)))))
-#|
-(define (adjoin-set x set)
-  (if (element-of-set? x set)
-	set
-	(cons x set)))
-|#
+
 (define (intersection-set set1 set2)
   (cond ((or (null? set1) (null? set2)) '())
 		((element-of-set? (car set1) set2)
 		 (cons (car set1)
 			   (intersection-set (cdr set1) set2)))
 		(else (intersection-set (cdr set1) set2))))
-#|
-(define (union-set set1 set2)
-  (cond ((null? set1) set2)
-		((element-of-set? (car set1) set2)
-		 (union-set (cdr set1) set2))
-		(else (cons (car set1)
-					(union-set (cdr set1) set2)))))
-|#
+
 (define (element-of-set? x set)
   (cond ((null? set) #f)
 		((equal? x (car set)) #t)
@@ -168,9 +156,10 @@
 	(cons '() elts)
 	(let ((left-size (quotient (- n 1) 2)))
 	  (let ((left-result
-			  (partial-tree elts left size)))
+			  (partial-tree elts left-size)))
 		(let ((left-tree (car left-result))
-			  (non-left-size (- n (+ left-size 1))))
+			  (non-left-elts (cdr left-result))
+			  (right-size (- n (+ left-size 1))))
 		  (let ((this-entry (car non-left-elts))
 				(right-result
 				  (partial-tree
@@ -184,5 +173,6 @@
 							   right-tree)
 					remaining-elts))))))))
 
-(print (union-set '(3 4) '(3 4 5)))
+(print (list->tree '(1 3 5 7 9 11)))
+;theta(n)
 
