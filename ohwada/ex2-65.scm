@@ -110,7 +110,8 @@
 
 
 
-; ‚±‚±‚©‚ç 2.65
+
+; 2.65
 
 ; union-set
 (define (union-set tree1 tree2)
