@@ -59,4 +59,3 @@
             (error "No method for these types"
                (list op type-tags))))))))
 
-

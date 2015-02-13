@@ -59,3 +59,4 @@ Louis の意見は正しいかどうか.
               (error "No method for these types"
                      (list op type-tags)))))))
 
+

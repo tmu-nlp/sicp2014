@@ -11,11 +11,11 @@
  
  ; boxos データベース
  (define boxnos-db
-   '((Tanaka (0  Kashiwa))
+   '((Tanaka (10 Kashiwa))
      (Suzuki (20 Matudo ))
      (Yamada (23 Kitasenju))))
  
- ; sizp データベース
+ ; sicp データベース
  (define sicp-db
      '((Wada    Tokyo          2200)
        (Sassman Masasachusetts 2400)))
