@@ -1,4 +1,5 @@
 #lang planet neil/sicp
+
 (define (update table key value)
   (cond ((null? table)
          (cons (cons key value) nil))

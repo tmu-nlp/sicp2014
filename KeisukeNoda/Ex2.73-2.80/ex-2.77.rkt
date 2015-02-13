@@ -1,8 +1,5 @@
-#lang racket
 
-(require "public.rkt")
-
-before fix the code substitution looks like this:
+追加する前のコードでは以下のようになる。
 
 (magnitude z)
 (apply-generic 'magnitude z)
@@ -10,7 +7,8 @@ before fix the code substitution looks like this:
 (get 'magnitude 'complex) -> null
 as result == null -> error !
 
-after fix:
+追加した後では、
+
 (magnitude z)
 (apply-generic 'magnitude z)
 (type-tag z) -> complex
