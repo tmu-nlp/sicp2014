@@ -75,27 +75,31 @@
         (append (symbols left) (symbols right))
         (+ (weight left) (weight right))))
 
-; adjoin-setは木や葉を重さの小さい順に並び替える
+; adjoin-setは木や葉を重さの昇順に並び替える
 (define (adjoin-set x set)
   (cond ((null? set) (list x))
         ((< (weight x) (weight (car set))) (cons x set))
         (else (cons (car set)
                     (adjoin-set x (cdr set))))))
 
+; ans
 (define (generate-huffman-tree pairs)
   (successive-merge (make-leaf-set pairs)))
 
-; ans
-(define (successive-merge pairs)
-  (if (null? (cdr pairs))
-      (car pairs)
+(define (successive-merge leaf-set)
+  (if (null? (cdr leaf-set))
+      (car leaf-set)
       (successive-merge
         (adjoin-set
-          (make-code-tree (car pairs) (cadr pairs))
-          (cddr pairs)))))
+          (make-code-tree (car leaf-set) (cadr leaf-set))
+          (cddr leaf-set)))))
 
 (print (generate-huffman-tree '((A 4) (B 2) (C 1) (D 1) (E 6) (F 8))))
 
+(print (make-leaf-set '((A 4) (B 2) (C 1) (D 1) (E 6) (F 8))))
+(print (car (make-leaf-set '((A 4) (B 2) (C 1) (D 1) (E 6) (F 8)))))
+(print (cadr (make-leaf-set '((A 4) (B 2) (C 1) (D 1) (E 6) (F 8)))))
+(print (cddr (make-leaf-set '((A 4) (B 2) (C 1) (D 1) (E 6) (F 8)))))
 
 ; make-leaf-setでleafを重みの小さい順に並び替えて、小さいものの二つから木を作り、そのあと残っている
 ; 木と葉を重みが小さい順に並び替えて再帰させて、一つの木になるまでそれを行う.

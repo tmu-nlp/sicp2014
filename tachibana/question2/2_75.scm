@@ -11,17 +11,18 @@
            (error "Unknown op -- MAKE-FROM-REAL-IMAG" op))))
   dispatch)
 
-(define (apply-generic op arg) (arg op))
-
-
-(define (make-from-mag-ang r a)
+(define (make-from-mag-ang x y)
   (define (dispatch op)
-    (cond ((eq? op 'real-part)
-           (* r (cos a)))
-          ((eq? op 'imag-part)
-           (* r (sin a)))
-          ((eq? op 'mgnitude) r)
-          ((eq? op 'angle) a)
-          (else (error "Unknown op -- MAKE-FROM-MAG-ANG" op))))
+    (cond ((eq? op 'real-part) (* x (cos y)))
+          ((eq? op 'imag-part) (* x (sin y)))
+          ((eq? op 'magnitude) x)
+          ((eq? op 'angle) y)
+          (else (error "Unknown op: MAKE-FROM-MAG-ANG" op))))
   dispatch)
+
+
+; 実行テスト
+(define test-complex (make-from-mag-ang 2.0 (/ 3.14 3)))
+
+(print (test-complex 'real-part))
 
