@@ -17,3 +17,9 @@
 (define (end-segment segment)
 	(cdr segment))
 
+(print (make-segment (make-vect 0 0) (make-vect 100 100)))
+
+(print (start-segment (make-segment (make-vect 0 0) (make-vect 100 100))))
+
+(print (end-segment (make-segment (make-vect 0 0) (make-vect 100 100))))
+
