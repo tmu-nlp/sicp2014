@@ -3,13 +3,15 @@
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
 
-;-------------------------------------------------
+;----------------------- 追加部分１------------------------------
+
 (define (sin-gen x) (apply-generic 'sin-gen x))
 (define (cos-gen x) (apply-generic 'cos-gen x))
 (define (atan-gen x y) (apply-generic 'atan-gen x y))
 (define (square-gen x) (apply-generic 'square-gen x))
 (define (sqrt-gen x) (apply-generic 'sqrt-gen x))
 
+;----------------------------------------------------------------
 
 
 ; get, put
@@ -54,49 +56,20 @@
 
 ; attach-tag, type-tag, contents
 (define (attach-tag type-tag contents)
-  (cons type-tag contents))
+  (if (eq? type-tag 'scheme-number)
+      contents
+      (cons type-tag contents)))
 
 (define (type-tag datum)
-  (if (pair? datum)
-      (car datum)
-      (error "Bad tagged datum -- TYPE-TAG" datum)))
+  (cond ((pair? datum) (car datum))
+        ((number? datum) 'scheme-number)
+        (else "Bad tagged datum -- TYPE-TAG" datum)))
 
 (define (contents datum)
-  (if (pair? datum)
-      (cdr datum)
-      (error "Bad tagged datum -- CONTENTS" datum)))
+  (cond ((pair? datum) (cdr datum))
+        ((number? datum) datum)
+        (else "Bad tagged datum -- CONTENTS" datum)))
 
-
-
-
-; apply-generic
-(define (apply-generic op . args)
-  (let ((type-tags (map type-tag args)))
-    (let ((proc (get op type-tags)))
-      (if proc
-          (apply proc (map contents args))
-          (if (= (length args) 2)
-              (let ((type1 (car type-tags))
-                    (type2 (cadr type-tags))
-                    (a1 (car args))
-                    (a2 (cadr args)))
-                (if (not (equal? type1 type2))
-                    (let ((t1->t2 (get-coercion type1 type2))
-                          (t2->t1 (get-coercion type2 type1)))
-                      (cond (t1->t2
-                            (apply-generic op (t1->t2 a1) a2))
-                            (t2->t1
-                            (apply-generic op a1 (t2->t1 a2)))
-                            (else
-                             (error "No method for these types"
-                                    (list op type-tags)))))
-                    (error "No method for these types"
-                           (list op type-tags))))
-                (error "No method for these types" (list op type-tags)))))))
-
-
-
-;--------------------- 追加部分１--------------------------
 
 ; apply-generic 修正版
 (define (apply-generic op . args)
@@ -156,6 +129,10 @@
        (lambda (x y) (tag (/ x y))))
   (put 'exp '(scheme-number scheme-number)
      (lambda (x y) (tag (expt x y))))
+  (put 'equ? '(scheme-number scheme-number)
+       (lambda (x y) (= x y)))
+  (put '=zero? '(scheme-number)
+       (lambda (x) (= x 0)))
   (put 'make 'scheme-number
        (lambda (x) (tag x)))
   (put 'raise '(scheme-number)
@@ -217,6 +194,11 @@
        (lambda (x y) (tag (mul-rat x y))))
   (put 'div '(rational rational)
        (lambda (x y) (tag (div-rat x y))))
+  (put 'equ? '(rational rational)
+       (lambda (x y) (and (= (numer x) (numer y))
+                          (= (denom x) (denom y)))))
+  (put '=zero? '(rational)
+       (lambda (x) (= (numer x) 0)))
   (put 'make 'rational
        (lambda (n d) (tag (make-rat n d))))
   (put 'raise '(rational)
@@ -229,19 +211,19 @@
 
   (put 'sin-gen '(rational)
        (lambda (x) (tag (make-rat (truncate (* 1000000 (sin (/ (numer x) (denom x)))))
-                             1000000))))
+                                  1000000))))
   (put 'cos-gen '(rational)
        (lambda (x) (tag (make-rat (truncate (* 1000000 (cos (/ (numer x) (denom x)))))
-                             1000000))))
+                                  1000000))))
   (put 'atan-gen '(rational)
        (lambda (x) (tag (make-rat (truncate (* 1000000 (atan (/ (numer x) (denom x)))))
-                             1000000))))
+                                  1000000))))
   (put 'square-gen '(rational)
        (lambda (x) (tag (make-rat (truncate (* 1000000 (square (/ (numer x) (denom x)))))
-                             1000000))))
+                                  1000000))))
   (put 'sqrt-gen '(rational)
        (lambda (x) (tag (make-rat (truncate (* 1000000 (sqrt (/ (numer x) (denom x)))))
-                             1000000))))
+                                  1000000))))
 ;---------------------------------------------------------------
 
   'done)
@@ -404,6 +386,11 @@
        (lambda (z1 z2) (tag (mul-complex z1 z2))))
   (put 'div '(complex complex)
        (lambda (z1 z2) (tag (div-complex z1 z2))))
+  (put 'equ? '(complex complex)
+       (lambda (x y) (and (= (real-part x) (real-part y))
+                          (= (imag-part x) (imag-part y)))))
+  (put '=zero? '(complex)
+       (lambda (x) (and (= (real-part x) 0) (= (imag-part x) 0))))
   (put 'make-from-real-imag 'complex
        (lambda (x y) (tag (make-from-real-imag x y))))
   (put 'make-from-mag-ang 'complex
@@ -431,7 +418,9 @@
 (define (magnitude z) (apply-generic 'magnitude z))
 (define (angle z) (apply-generic 'angle z))
 
-
+; equ?, =zero?
+(define (equ? x y) (apply-generic 'equ? x y))
+(define (=zero? x) (apply-generic '=zero? x))
 
 ; raise 演算
 (define (raise z) (apply-generic 'raise z))
@@ -440,12 +429,14 @@
 
 
 
+
+
 ; テスト
-(define a (make-rational 5 3))
-(define b (make-scheme-number 4))
+(define a (make-rational 5 6))
+(define b (make-scheme-number 3))
 (define c (make-complex-from-mag-ang b a))
 
 (print (add c c))
-; (complex rectangular (rational -95723.0 . 125000.0) rational 995407.0 . 125000.0) 
+   ;(complex rectangular (rational -95723.0 . 125000.0) rational 995407.0 . 125000.0) 
 (print (real-part (add c c))) ; (rational -95723.0 . 125000.0)
 (print (imag-part (add c c))) ; (rational 995407.0 . 125000.0)
