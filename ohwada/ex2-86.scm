@@ -437,6 +437,13 @@
 (define c (make-complex-from-mag-ang b a))
 
 (print (add c c))
-   ;(complex rectangular (rational -95723.0 . 125000.0) rational 995407.0 . 125000.0) 
-(print (real-part (add c c))) ; (rational -95723.0 . 125000.0)
-(print (imag-part (add c c))) ; (rational 995407.0 . 125000.0)
+   ;(complex rectangular (rational 504309.0 . 125000.0) rational 138783.0 . 31250.0)
+(print (real-part (add c c))) ; (rational 504309.0 . 125000.0)
+(print (imag-part (add c c))) ; (rational 138783.0 . 31250.0)
+
+
+; この real-part と imag-part の rational をそれぞれ割り算して値を出すと、
+; 4.034472 と 4.441056 になり、これらはそれぞれ polar パッケージ内の
+; real-part と imag-part によって angle と magnitude ( a と b ) を用いて
+; 計算される値の 2 倍にほぼ等しい ( c 足す c なので)。
+; 従って、正しく計算されている。
